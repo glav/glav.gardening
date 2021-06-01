@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace query_plant.Controllers
+namespace Glav.QueryPlant.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -24,8 +24,10 @@ namespace query_plant.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PlantSummary> Get()
+        public IEnumerable<PlantSummary> Get([FromQuery]string query)
         {
+            _logger.LogInformation("Querying for plant information: [{0}]",query);
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new PlantSummary
             {
