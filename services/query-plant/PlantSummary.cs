@@ -1,6 +1,6 @@
 using System;
 
-namespace query_plant
+namespace Glav.QueryPlant
 {
     public class PlantSummary
     {

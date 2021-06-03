@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace info_gathering_controller
+namespace Glav.InformationGathering
 {
     public class Program
     {

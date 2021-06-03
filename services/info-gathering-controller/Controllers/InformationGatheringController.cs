@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace info_gathering_controller.Controllers
+namespace Glav.InformationGathering.Controllers
 {
     [ApiController]
     [Route("[controller]")]
