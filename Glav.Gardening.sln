@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D8CBBC2B-353A-4983-8A7E-85C876889BF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D6098922-18C5-4FFD-9B37-9DDC3A3B7C27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.DataSanitiser.Service", "Services\Glav.DataSanitiser.Service\Glav.DataSanitiser.Service.csproj", "{18969BBA-69E1-47B8-99DA-49293AFB4B9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.InfoGatheringController.Service", "Services\Glav.InfoGatheringController.Service\Glav.InfoGatheringController.Service.csproj", "{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.QueryPlant.Service", "Services\Glav.QueryPlant.Service\Glav.QueryPlant.Service.csproj", "{53AA568C-55D0-4344-8C85-2EC8C954E0D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.Gardening.DataSanitiser.UnitTests", "Tests\Glav.Gardening.DataSanitiser.UnitTests\Glav.Gardening.DataSanitiser.UnitTests.csproj", "{97E32F7D-D23A-492B-B071-3878E1A548C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18969BBA-69E1-47B8-99DA-49293AFB4B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18969BBA-69E1-47B8-99DA-49293AFB4B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18969BBA-69E1-47B8-99DA-49293AFB4B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18969BBA-69E1-47B8-99DA-49293AFB4B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53AA568C-55D0-4344-8C85-2EC8C954E0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53AA568C-55D0-4344-8C85-2EC8C954E0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53AA568C-55D0-4344-8C85-2EC8C954E0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53AA568C-55D0-4344-8C85-2EC8C954E0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97E32F7D-D23A-492B-B071-3878E1A548C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E32F7D-D23A-492B-B071-3878E1A548C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E32F7D-D23A-492B-B071-3878E1A548C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E32F7D-D23A-492B-B071-3878E1A548C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18969BBA-69E1-47B8-99DA-49293AFB4B9D} = {D6098922-18C5-4FFD-9B37-9DDC3A3B7C27}
+		{C93FCE4A-3A5E-4CD7-90EC-08B6FC058341} = {D6098922-18C5-4FFD-9B37-9DDC3A3B7C27}
+		{53AA568C-55D0-4344-8C85-2EC8C954E0D7} = {D6098922-18C5-4FFD-9B37-9DDC3A3B7C27}
+		{97E32F7D-D23A-492B-B071-3878E1A548C5} = {D8CBBC2B-353A-4983-8A7E-85C876889BF5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A88D64E-B6AA-4E75-90C7-1A3976B7E363}
+	EndGlobalSection
+EndGlobal
