@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Glav.DataSanitiser.Strategies
+namespace Glav.DataSanitiser.Sanitisers.Strategies
 {
     public class RemoveHtmlStrategy : IDataSanitiserStrategy
     {

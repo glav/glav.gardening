@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Glav.InformationGathering.Domain.Agents
+namespace Glav.InformationGathering.Domain.GardenOrg
 {
     public class GaardenOrgWebsiteAgent : IInfoGatheringAgent
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Glav.DataSanitiser.Strategies
+namespace Glav.DataSanitiser.Sanitisers.Strategies
 {
     public class RemoveAllButBodyStrategy : IDataSanitiserStrategy
     {

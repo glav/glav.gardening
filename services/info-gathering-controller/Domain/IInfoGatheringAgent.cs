@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Glav.InformationGathering.Domain.Agents
+namespace Glav.InformationGathering.Domain
 {
     public interface IInfoGatheringAgent
     {

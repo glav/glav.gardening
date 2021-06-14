@@ -1,11 +1,9 @@
-﻿using Glav.DataSanitiser.Data;
-using Glav.DataSanitiser.Diagnostics;
-using Glav.DataSanitiser.Strategies;
+﻿using Glav.DataSanitiser.Diagnostics;
+using Glav.DataSanitiser.Sanitisers.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Glav.DataSanitiser
 {

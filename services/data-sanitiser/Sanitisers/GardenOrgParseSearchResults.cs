@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Glav.DataSanitiser.Strategies
+namespace Glav.DataSanitiser
 {
-    public class GardenOrgRemoveHtmlFromSearchResultStrategy : IDataSanitiserStrategy
+    public class GardenOrgParseSearchResults
     {
         private const string _initialMarker = "<td data-th=\"\">";
-        public SanitiseContentType ContentTypeSupported => SanitiseContentType.Html;
-        private List<GardenOrgExtractOnlySearchResult> _searchResults = new List<GardenOrgExtractOnlySearchResult>(); 
 
-        public string SanitiseData(string content)
+        public List<GardenOrgSearchResultItem> ParseData(string content)
         {
+            var searchResults = new List<GardenOrgSearchResultItem>();
             if (string.IsNullOrWhiteSpace(content))
             {
-                return content;
+                return searchResults;
             }
             var builder = new StringBuilder();
 
@@ -32,23 +31,12 @@ namespace Glav.DataSanitiser.Strategies
                     var posStartText = content.IndexOf('>',posEndQuotes);
                     var posEndText = content.IndexOf("</a>",posStartText);
                     var searchTextResult = content.Substring(posStartText+1,posEndText-posStartText-1);
-                    _searchResults.Add(new GardenOrgExtractOnlySearchResult{ Href = hrefResult, ResultText = searchTextResult});
-                    Console.WriteLine($"> Href: [{hrefResult}]: {searchTextResult}");
+                    searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult});
                     pos = posEndText;
-
                 }
             }
-
-
-            return "";
-
-
+            return searchResults;
         }
     }
 
-    public class GardenOrgExtractOnlySearchResult
-    {
-        public string Href {get; set;}
-        public string ResultText {get; set;}
-    }
 }
