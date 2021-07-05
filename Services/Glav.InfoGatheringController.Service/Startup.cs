@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,8 @@ namespace Glav.InformationGathering
                 app.UseDeveloperExceptionPage();
             }
 
+            
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "info_gathering_controller v1"));
             app.UseHttpsRedirection();
@@ -55,5 +58,6 @@ namespace Glav.InformationGathering
                 endpoints.MapControllers();
             });
         }
+
     }
 }

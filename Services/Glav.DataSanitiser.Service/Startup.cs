@@ -26,7 +26,7 @@ namespace Glav.DataSanitiser
             services.AddControllers(config =>
             {
                 config.InputFormatters.Clear();
-                config.InputFormatters.Add(new RawInputFormatter());
+                config.InputFormatters.Add(new RawInputFormatter()); // Allow only text/plain or application/octet
             });
 
             services.AddSwaggerGen(c =>

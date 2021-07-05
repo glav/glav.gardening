@@ -1,5 +1,5 @@
-﻿using Glav.DataSanitiser.Diagnostics;
-using Glav.DataSanitiser.Sanitisers.Strategies;
+﻿using Glav.DataSanitiser.Sanitisers.Strategies;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace Glav.DataSanitiser
 {
     public class DataSanitiserEngine
     {
-        private readonly IDiagnosticLogger _logger;
+        private readonly ILogger _logger;
         private List<IDataSanitiserStrategy> _strategiesToUse;
-        public DataSanitiserEngine(List<IDataSanitiserStrategy> strategiesToUse, IDiagnosticLogger logger)
+        public DataSanitiserEngine(List<IDataSanitiserStrategy> strategiesToUse, ILogger logger)
         {
             _logger = logger;
             if (strategiesToUse == null || strategiesToUse.Count == 0)
@@ -35,7 +35,7 @@ namespace Glav.DataSanitiser
 
         public string SanitiseDataForAllContentTypes(string data)
         {
-            _logger.Info("SanitiseData");
+            _logger.LogInformation("SanitiseData");
 
             try
             {
@@ -43,7 +43,7 @@ namespace Glav.DataSanitiser
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error attempting to Sanitise Data");
+                _logger.LogError(ex, "Error attempting to Sanitise Data");
             }
             return null;
         }
