@@ -22,7 +22,7 @@ namespace Glav.DataSanitiser.Controllers
         public GardenOrgSearchSanitisedData SanitiseGardenOrgSearchResults([FromBody]string dataToSanitise)
         {
             _logger.LogInformation("Parsing and extracting data for Garrden.Org");
-            var gardenOrgParser = new GardenOrgParseSearchResults();
+            var gardenOrgParser = new GardenOrgSearchResultsParser();
             var searchResults = gardenOrgParser.ParseData(dataToSanitise);
             return new GardenOrgSearchSanitisedData { SearchResults = searchResults };
 

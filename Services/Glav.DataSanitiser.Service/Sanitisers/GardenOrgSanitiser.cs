@@ -15,7 +15,7 @@ namespace Glav.DataSanitiser.Sanitisers
             var cleanData = engine.SanitiseDataForAllContentTypes(data);
 
             // Parse the content to extract the search results
-            var searchResultParser = new GardenOrgParseSearchResults();
+            var searchResultParser = new GardenOrgSearchResultsParser();
             var searchResults = searchResultParser.ParseData(cleanData);
 
             //Then clean up the search result text some more ensuring no HTML content is part of the text description

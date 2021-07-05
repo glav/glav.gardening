@@ -1,8 +1,11 @@
+using Glav.DataSanitiser.MediaFormatters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
 namespace Glav.DataSanitiser
@@ -20,7 +23,12 @@ namespace Glav.DataSanitiser
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.InputFormatters.Clear();
+                config.InputFormatters.Add(new RawInputFormatter());
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Plant data sanitiser service", Version = "v1" });

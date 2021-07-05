@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Glav.DataSanitiser
 {
-    public class GardenOrgParseSearchResults
+    public class GardenOrgSearchResultsParser
     {
         private const string _initialMarker = "<td data-th=\"\">";
 
