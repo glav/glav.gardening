@@ -21,13 +21,17 @@ namespace Glav.InformationGathering.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("start")]
+        [HttpPost("/start")]  // Used for dapr as dapr sidecar uses the app id in url making controller redundant
+        //[HttpPost("start")]  // for standard /controller/method routing
         public async Task StartGatheringInformation()
         {
             _logger.LogInformation("Starting information gathering process");
 
             var endpoint = _configuration["endpoints:datasanitiser"];
 
+            // Ensure we use the 'DAPR_HTTP_PORT' environment variable here and replace with the port below
+
+            var daprEndpoint = "localhost:3500/v1.0/invoke/sanitiserapp/method/GardenOrgSearchResults";
             // Kick off the gathering process to retrieve data from all known sources
             await Task.FromResult(0);
         }

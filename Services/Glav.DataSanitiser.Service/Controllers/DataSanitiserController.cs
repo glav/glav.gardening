@@ -18,7 +18,8 @@ namespace Glav.DataSanitiser.Controllers
             _logger = logger;
         }
 
-        [HttpPost("GardenOrgSearchResults")]
+        [HttpPost("/GardenOrgSearchResults")]  // when hosting via dapr, we want this to be at the root since we will be 
+        //[HttpPost("GardenOrgSearchResults")]
         public GardenOrgSearchSanitisedData SanitiseGardenOrgSearchResults([FromBody]string dataToSanitise)
         {
             _logger.LogInformation("Parsing and extracting data for Garrden.Org");

@@ -5,7 +5,7 @@ namespace Glav.InformationGathering.Domain
     public interface IInfoGatheringAgent
     {
         Task StartAsync(string queryTerm);
-        Task<int> Progress();
+        int Progress { get; }
         Task StopAsync();
     }    
 }

@@ -9,7 +9,8 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
+      "commandLineArgs": "run --app-id sanitiser --app-port 5001 --app-ssl --dapr-http-port 3500 dotnet run",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
