@@ -24,6 +24,9 @@ namespace Glav.Gardening.DataSanitiser.UnitTests
             var gardenOrgParser = new GardenOrgSearchResultDetailsParser();
             var itemResults = gardenOrgParser.ParseData(data);
             Assert.NotNull(itemResults);
+            Assert.Equal("Herb/Forb", itemResults.Habit);
+            Assert.Equal("Full Sun to Partial Shade", itemResults.SunRequirements);
+            Assert.Equal("Unusual foliage color, Fragrant", itemResults.Leaves);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
@@ -46,11 +47,22 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
             {
                 spos = tdContent.IndexOf(">", spos + 7);
                 int sEndPos = tdContent.IndexOf("</span>");
-                return tdContent.Substring(spos+1, sEndPos-spos-1);
+                return StripHtmlAndRemoveCrLf(tdContent.Substring(spos + 1, sEndPos - spos - 1));
             }
             // no span, lets just extract
             pos = content.IndexOf(">", pos);
-            return content.Substring(pos + 1, endPos-pos-1);
+            return StripHtmlAndRemoveCrLf(content.Substring(pos + 1, endPos - pos - 1));
+        }
+
+        private string StripHtmlAndRemoveCrLf(string content)
+        {
+            var cleanedContent = Regex.Replace(content, "<.*?>", String.Empty).Replace("\r\n", ", ");
+            if (cleanedContent.Substring(cleanedContent.Length-2,2) == ", ")
+            {
+                return cleanedContent.Substring(0,cleanedContent.Length - 2);
+            }
+            return cleanedContent;
+
         }
     }
 
