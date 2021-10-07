@@ -31,12 +31,12 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
             var leaves = GetElementDataForTd(content, pos);
 
             return new GardenOrgSearchResultDetail { 
-                Habit = plantHabitContent, 
+                PlantHabit = plantHabitContent, 
                 SunRequirements = sunRqmntsContent,
                 Leaves = leaves
              };
         }
-        private string GetElementDataForTd(string content, int startPos)
+        private string[] GetElementDataForTd(string content, int startPos)
         {
             int pos = content.IndexOf("<td", startPos);
             int endPos = content.IndexOf("</td>",pos);
@@ -54,12 +54,16 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
             return StripHtmlAndRemoveCrLf(content.Substring(pos + 1, endPos - pos - 1));
         }
 
-        private string StripHtmlAndRemoveCrLf(string content)
+        private string[] StripHtmlAndRemoveCrLf(string content)
         {
-            var cleanedContent = Regex.Replace(content, "<.*?>", String.Empty).Replace("\r\n", ", ");
-            if (cleanedContent.Substring(cleanedContent.Length-2,2) == ", ")
+            var cleanedContent = Regex.Replace(content, "<.*?>", String.Empty).Split("\r\n");
+            if (cleanedContent == null || cleanedContent.Length == 0)
             {
-                return cleanedContent.Substring(0,cleanedContent.Length - 2);
+                return new string[] { };
+            }
+            if (string.IsNullOrWhiteSpace(cleanedContent[cleanedContent.Length-1]))
+            {
+                Array.Resize(ref cleanedContent, cleanedContent.Length - 1);
             }
             return cleanedContent;
 
