@@ -26,7 +26,7 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
         public async Task StartAsync(string queryTerm)
         {
             // Get some search results.
-            var content = await _commsProtocol.GetContentAsync(queryUrl, queryTerm);
+            var content = await _commsProtocol.GetContentAsync(string.Format(queryUrl, queryTerm));
 
             //Note: use Polly or some retry mechanism here - try..catch for now
             try
@@ -49,6 +49,11 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
                 _progress = 40;
 
                 // 1. Pass search results into next component to make additional queries against GardenOrg to create a GardenOrgPlantItem for each result
+                foreach (var result in searchResults)
+                {
+                    var detailContent = await _commsProtocol.GetContentAsync(result.Href);
+                    var parsedDetail = new GardenOrgSearchResultDetailsParser().ParseData(detailContent);
+                }
                 _progress = 80;
 
                 // 2. Store results into storage

@@ -4,7 +4,7 @@ namespace Glav.Gardening.Communications
 {
     public interface ICommunicationProtocol
     {
-        Task<string> GetContentAsync(string queryUrl, string queryTerm);
+        Task<string> GetContentAsync(string queryUrl);
     }
 
 }

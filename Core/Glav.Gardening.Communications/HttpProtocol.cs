@@ -15,7 +15,7 @@ namespace Glav.Gardening.Communications
         {
             _logger = logger;
         }
-        public async Task<string> GetContentAsync(string queryUrl, string queryTerm)
+        public async Task<string> GetContentAsync(string queryUrl)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
@@ -24,7 +24,7 @@ namespace Glav.Gardening.Communications
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
             client.DefaultRequestHeaders.Add("User-Agent", "query/agent - gardenorg");  // Must add this or gardenOrg returns no results.
-            var result = await client.GetAsync(string.Format(queryUrl, queryTerm));
+            var result = await client.GetAsync(queryUrl);
             var content = await GetZipBody(result);
             return content;
 

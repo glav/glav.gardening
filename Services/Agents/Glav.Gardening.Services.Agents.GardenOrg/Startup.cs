@@ -1,3 +1,4 @@
+using Glav.Gardening.Communications;
 using Glav.InformationGathering.Domain.GardenOrg;
 using Glav.InformationGathering.Domain.GardenOrg.Domain;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,7 @@ namespace Glav.Gardening.Services.Agents
 
             services.AddControllers();
             services.AddTransient<GardenOrgWebsiteAgent>();
+            services.AddTransient<ICommunicationProtocol,HttpProtocol>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Glav.Gardening.Services.Agents", Version = "v1" });
