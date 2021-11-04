@@ -69,10 +69,11 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
                     .Where(l => !string.IsNullOrWhiteSpace(l));
                 if (tmpList == null || tmpList.Count() == 0) continue;
                 var workArray = tmpList.ToArray();
-                return RemoveEndElelementIfEmpty(ref workArray);
+                workList.AddRange(RemoveEndElelementIfEmpty(ref workArray));
             }
 
-            return RemoveEndElelementIfEmpty(ref cleanedContent);
+            var finalList = workList.ToArray();
+            return RemoveEndElelementIfEmpty(ref finalList);
 
         }
 
