@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<style>
+		.grecaptcha-badge {
+			display: none;
+		}
+	</style>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+	<script type="text/javascript" async=true>
+		(function() {
+  var host = window.location.hostname;
+  var element = document.createElement('script');
+  var firstScript = document.getElementsByTagName('script')[0];
+  var url = 'https://quantcast.mgr.consensu.org'
+    .concat('/choice/', 'tUCKCKWuAuJkW', '/', host, '/choice.js')
+  var uspTries = 0;
+  var uspTriesLimit = 3;
+  element.async = true;
+  element.type = 'text/javascript';
+  element.src = url;
+
+  firstScript.parentNode.insertBefore(element, firstScript);
+
+  function makeStub() {
+    var TCF_LOCATOR_NAME = '__tcfapiLocator';
+    var queue = [];
+    var win = window;
+    var cmpFrame;
+
+    function addFrame() {
+      var doc = win.document;
+      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+      if (!otherCMP) {
+        if (doc.body) {
+          var iframe = doc.createElement('iframe');
+
+          iframe.style.cssText = 'display:none';
+          iframe.name = TCF_LOCATOR_NAME;
+          doc.body.appendChild(iframe);
+        } else {
+          setTimeout(addFrame, 5);
+        }
+      }
+      return !otherCMP;
+    }
+
+    function tcfAPIHandler() {
+      var gdprApplies;
+      var args = arguments;
+
+      if (!args.length) {
+        return queue;
+      } else if (args[0] === 'setGdprApplies') {
+        if (
+          args.length > 3 &&
+          args[2] === 2 &&
+          typeof args[3] === 'boolean'
+        ) {
+          gdprApplies = args[3];
+          if (typeof args[2] === 'function') {
+            args[2]('set', true);
+          }
+        }
+      } else if (args[0] === 'ping') {
+        var retr = {
+          gdprApplies: gdprApplies,
+          cmpLoaded: false,
+          cmpStatus: 'stub'
+        };
+
+        if (typeof args[2] === 'function') {
+          args[2](retr);
+        }
+      } else {
+        queue.push(args);
+      }
+    }
+
+    function postMessageEventHandler(event) {
+      var msgIsString = typeof event.data === 'string';
+      var json = {};
+
+      try {
+        if (msgIsString) {
+          json = JSON.parse(event.data);
+        } else {
+          json = event.data;
+        }
+      } catch (ignore) {}
+
+      var payload = json.__tcfapiCall;
+
+      if (payload) {
+        window.__tcfapi(
+          payload.command,
+          payload.version,
+          function(retValue, success) {
+            var returnMsg = {
+              __tcfapiReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: payload.callId
+              }
+            };
+            if (msgIsString) {
+              returnMsg = JSON.stringify(returnMsg);
+            }
+            if (event && event.source && event.source.postMessage) {
+              event.source.postMessage(returnMsg, '*');
+            }
+          },
+          payload.parameter
+        );
+      }
+    }
+
+    while (win) {
+      try {
+        if (win.frames[TCF_LOCATOR_NAME]) {
+          cmpFrame = win;
+          break;
+        }
+      } catch (ignore) {}
+
+      if (win === window.top) {
+        break;
+      }
+      win = win.parent;
+    }
+    if (!cmpFrame) {
+      addFrame();
+      win.__tcfapi = tcfAPIHandler;
+      win.addEventListener('message', postMessageEventHandler, false);
+    }
+  };
+
+  makeStub();
+
+  var uspStubFunction = function() {
+    var arg = arguments;
+    if (typeof window.__uspapi !== uspStubFunction) {
+      setTimeout(function() {
+        if (typeof window.__uspapi !== 'undefined') {
+          window.__uspapi.apply(window.__uspapi, arg);
+        }
+      }, 500);
+    }
+  };
+
+  var checkIfUspIsReady = function() {
+    uspTries++;
+    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+      console.warn('USP is not accessible');
+    } else {
+      clearInterval(uspInterval);
+    }
+  };
+
+  if (typeof window.__uspapi === 'undefined') {
+    window.__uspapi = uspStubFunction;
+    var uspInterval = setInterval(checkIfUspIsReady, 6000);
+  }
+})();
+	</script>
+	<!-- End Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+	<script src="/i/3p/jquery-ui.min.js" defer="defer"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-migrate-3.3.1.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/i/c/nga_20210804.css?f=1" rel="stylesheet">
+	<script src="/i/js/colorbox-min.js" defer="defer"></script>
+	<link rel="canonical" href="https://garden.org/plants/view/242686/Mints-Mentha/" />
+	<link rel="search" href="https://garden.org/i/search/opensearch_plants.xml"
+		type="application/opensearchdescription+xml" title="NGA Database search" />
+	<meta name="description"
+		content="Plant database entry for Mints (Mentha) with 15 images, 2 comments, and 22 data details.">
+	<meta property="og:url" content="https://garden.org/plants/view/242686/Mints-Mentha/">
+	<meta property="og:type" content="website">
+	<meta property="og:title"
+		content="Plant database entry for Mints (Mentha) with 15 images, 2 comments, and 22 data details.">
+	<meta property="og:description"
+		content="Plant database entry for Mints (Mentha) with 15 images, 2 comments, and 22 data details.">
+	<meta property="og:image" content="https://garden.org/pics/2016-07-07/Fleur569/01d40f.jpg">
+	<meta property="og:site" content="Garden.org">
+
+	<meta property="fb:app_id" content="457278271124614" />
+	<meta name="msapplication-TileImage" content="/i/p/nga/nga_144.png">
+	<link rel="apple-touch-icon" href="/i/p/nga/nga_57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/i/p/nga/nga_72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/i/p/nga/nga_114.png" />
+	<title>The Main Plant entry for Mints (Mentha) - Garden.org</title>
+
+	<script>
+		// Prevent form resubmission.
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+
+  $(document).ready(function() {
+
+    // No framing the site, please.
+    if(top!=self) { top.location.replace(document.location); }
+
+    // ////////////////////////////////////////////
+    // The below forces the footer to stick to the bottom, if the page isn't tall enough.
+    var docHeight = $(window).height();
+    var footerHeight = $("#atpfooter").height();
+    var footerTop = $("#atpfooter").position().top + footerHeight;
+ 
+    if (footerTop < docHeight) {
+      $("#atpfooter").css("margin-top", -22+ (docHeight - footerTop) + "px");
+    }
+
+    // ////////////////////////////////////////////
+    // The below loads the system messages, mail, etc. into the modal.
+
+    var trigger = $("body").find('[data-toggle="modal"]');
+    trigger.click(function(e) {
+      e.preventDefault();
+      var theModal = $(this).attr("data-target");
+      var ngaview = $(this).attr("data-ngaview"); 
+      var thetitle = $(this).attr("title");
+
+      $(theModal).find(".modal-title").html(thetitle);
+
+      var uri = theModal.replace("#", "");
+
+      if (uri == "ModalNGAView") {
+        $.get("/apps/atpview/show/"+ngaview+"/", function(data) {
+          var modal = $(this);
+          $(theModal).find(".modal-body").html(data);
+        });
+
+      } else {
+        $.get("/i/ajax/modal/"+uri+".php", function(data) {
+          var modal = $(this);
+          $(theModal).find(".modal-body").html(data);
+        });
+      };
+
+    });
+
+  });
+
+	</script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-4809383-1', 'auto');
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQQK3FHVM6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LQQK3FHVM6');
+	</script>
+
+
+</head>
+
+<body>
+	<div class="modal fade" id="ModalMail" tabindex="-1" role="dialog" aria-labelledby="myMailModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myMailModalLabel">New and Unread Tree-Mails</h4>
+				</div>
+				<div class="modal-body">
+					<img src="/i/icon/loading.gif" alt="...">
+        </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="myShareModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myShareModalLabel">Share This Page</h4>
+					</div>
+					<div class="modal-body">
+						Use these convenient icons to share this page on various social media platforms:<p>
+							<a
+								href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F"><img src="/i/p/social/pinterest.png" alt="Pinterest" style="width:48px;height:48px;margin:10px;"></a>
+								<a
+									href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F"><img src="/i/p/social/facebook.png" alt="Facebook" style="width:48px;height:48px;margin:10px;"></a>
+									<a
+										href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F&title=The+Main+Plant+entry+for+Mints+%28Mentha%29+-+Garden.org&summary=The+Main+Plant+entry+for+Mints+%28Mentha%29+-+Garden.org"><img src="/i/p/social/linkedin.png" alt="Linkedin" style="width:48px;height:48px;margin:10px;"></a>
+										<a
+											href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F&text=The+Main+Plant+entry+for+Mints+%28Mentha%29+-+Garden.org"><img src="/i/p/social/twitter.png" alt="Twitter" style="width:48px;height:48px;margin:10px;"></a>
+											<a
+												href="https://mail.google.com/mail/?view=cm&su=The+Main+Plant+entry+for+Mints+%28Mentha%29+-+Garden.org&body=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F"><img src="/i/p/social/gmail.png" alt="GMail" style="width:48px;height:48px;margin:10px;"></a>
+												<a
+													href="https://reddit.com/submit?url=https%3A%2F%2Fgarden.org%2Fplants%2Fview%2F242686%2FMints-Mentha%2F&title=The+Main+Plant+entry+for+Mints+%28Mentha%29+-+Garden.org"><img src="/i/p/social/reddit48x48_2.png" alt="Reddit" style="width:48px;height:48px;margin:10px;"></a>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="ModalNGAView" tabindex="-1" role="dialog" aria-labelledby="myNGAModalLabel">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myNGAModalLabel"></h4>
+					</div>
+					<div class="modal-body">
+						<img src="/i/icon/loading.gif" alt="..">
+        </div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="ModalSysMsg" tabindex="-1" role="dialog" aria-labelledby="mySysMsgModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="mySysMsgModalLabel">New Messages from Garden.org</h4>
+						</div>
+						<div class="modal-body">
+							<img src="/i/icon/loading.gif" alt="">
+        </div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<nav role="navigation" class="navbar navbar-default navbar-fixed-top" id="nganav1">
+					<div class="fluid-container">
+						<div class="navbar-header navbar-left pull-left">
+							<a href="/"><i class="fa fa-home fa-fw fa-1x fahomeicon"></i></a>
+						</div>
+						<div class="navbar-header navbar-right pull-right">
+							<ul class="nav pull-left">
+
+
+								<li class="navbar-text pull-left">
+									<a href="#" data-toggle="modal" data-target="#ModalShare" title="Share this page">
+										<i class="fa fa-share-alt fa-fw fa-1x ngafaicons"></i>
+									</a>
+								</li>
+								<li class="navbar-text pull-left"><a
+										href="/users/join/"><i class="fa fa-user-plus"> </i> Signup</a></li>
+								<li class="navbar-text pull-left"><a href="/login.php"><i class="fa fa-sign-in"> </i>
+										Login</a></li>
+
+							</ul>
+							<button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+						</div>
+						<div class="visible-xs-block clearfix"></div>
+						<div class="collapse navbar-collapse">
+							<ul class="nav navbar-nav navbar-left">
+
+								<ul class="nav navbar-nav" id="nga_dropdowns">
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Learn
+											<i class="fa fa-caret-down"></i></a>
+										<ul class="dropdown-menu">
+											<li><a href="/learn/">Learning Library Homepage</a></li>
+											<li><a href="/learn/library/plantguide/">Plant Care Guides</a></li>
+											<li><a href="/learn/library/foodguide/">Food Gardening Guides</a></li>
+											<li><a href="/learn/library/weeds/">Weed Library</a></li>
+											<li><a href="/learn/library/pests/">Pest Control Library</a></li>
+											<li><a href="/courseweb/">Garden Curricula</a></li>
+											<li><a href="/ideas/podcast/">Podcast</a></li>
+											<li><a href="/learn/videos/">Videos</a></li>
+											<li><a href="/special/downloads/">Downloads</a></li>
+											<li><a href="/nga/searchqa/">Questions and Answers</a></li>
+											<li><a href="/nga/dictionary/">Garden Dictionary</a></li>
+											<li><a href="/ediblelandscaping/">Edible Landscaping</a></li>
+											<li><a href="/urbangardening/">Urban Gardening</a></li>
+											<li><a href="/learn/articles/">Browse all articles</a></li>
+										</ul>
+									</li>
+
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Plants DB
+											<i class="fa fa-caret-down"></i></a>
+										<ul class="dropdown-menu">
+											<li><a href="/plants/">Plants Database</a></li>
+											<li><a href="/plants/search/text.php">Search by name</a></li>
+											<li><a href="/plants/search/advanced.php">Search by characteristics</a></li>
+											<li class="divider"></li>
+											<li><a href="/plants/multi/">Plant Combinations</a></li>
+											<li><a href="/apps/plant_photos/view/">See All New Database Photos</a></li>
+											<li class="divider"></li>
+										</ul>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools
+											<i class="fa fa-caret-down"></i></a>
+										<ul class="dropdown-menu">
+											<li><a href="/apps/">View All Apps</a></li>
+											<li><a href="/apps/calendar/">Vegetable Planting Calendar</a></li>
+											<li><a href="/apps/frost-dates/">Frost Dates Lookup</a></li>
+											<li><a href="/apps/swap/">Seed Swaps</a></li>
+											<li><a href="/lists/">Plant Lists</a></li>
+											<li><a href="/nga/calculators/">Gardening Calculators</a></li>
+											<li><a href="/greenpages/">Green Pages</a></li>
+											<li><a href="/nga/zipzone/">Zone Lookup</a></li>
+										</ul>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Community
+											<i class="fa fa-caret-down "></i></a>
+										<ul class="dropdown-menu">
+											<li><a href="/newswire/">Gardening News</a></li>
+											<li><a href="/ideas/">Member Ideas</a></li>
+											<li><a href="/forums/">Forums</a></li>
+											<li><a href="/blogs/">Blogs</a></li>
+											<li><a href="/apps/events/">Gardening Calendar of Events</a></li>
+											<li><a href="/frogs/">Gardening Knowledgebase</a></li>
+											<li><a href="/frogs/ask/">Ask a Question</a></li>
+											<li><a href="/apps/photocontest/">Photo Contests</a></li>
+										</ul>
+									</li>
+								</ul>
+
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<style>
+					#row_ngalogo {
+						background-image: url("/pics/2021-08-22/dirtdorphins/e5f012.jpg");
+					}
+				</style>
+
+				<div class="fluid-container">
+					<div class="col-md-12" id="row_ngalogo">
+						<a href="/"><img src="/i/p/nga/header/logo.png" width="154" height="150" alt="National Gardening Association Logo" class="nga_nav150"></a><a
+								href="/plants/"><img src="/i/p/nga/header/plants.png" width="250" height="150" alt="Header" id="row_text" class="nga_nav150"></a><a
+									href="/special/offers/newsletter_signup.php"><img src="/i/p/btn_newsletter.png" class="navbtn_button" alt="Get our newsletter"></a>
+
+					</div>
+				</div>
+				<div class="container-fluid" id="ngabody">
+					<div class="row" style="margin-bottom:5px;">
+						<div class="col-sm-8">
+							<h1 class="page-header">The Main Plant entry for Mints (<i>Mentha</i>)</h1>
+						</div>
+						<div class="col-sm-4 text-right">
+							<h2 class="page-header">
+								<form class="form-inline" action="/plants/search/text/" method="get">
+									<div class="input-group">
+										<input type="text" class="form-control" name="q" placeholder="Search Plants">
+										<span class="input-group-btn">
+      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+    </span>
+									</div>
+								</form>
+							</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<center>
+								<!-- Tag ID: garden_leaderboard_atf -->
+								<div align="center" data-freestar-ad="__320x100 __970x250" id="garden_leaderboard_atf">
+									<script data-cfasync="false" type="text/javascript">
+										freestar.config.enabled_slots.push({ placementName: "garden_leaderboard_atf", slotId: "garden_leaderboard_atf" });
+									</script>
+								</div>
+							</center>
+							<div class="alert alert-success">This database entry exists to show plant data and photos
+								that apply generically to <a href="/plants/group/mints/">all Mints</a>.</div>
+							<P>
+								<div class="fluid-container">
+									<div class="row">
+
+										<div class="col-sm-6">
+											<div>
+												<table
+													class="table table-striped table-bordered table-hover simple-table">
+													<caption>General Plant Information (<a
+															href="/plants/propose/databox/242686/"
+															class="userlink">Edit</a>)</caption>
+													<tbody>
+														<tr>
+															<td style="width:150px;" data-th="">Plant Habit:</td>
+															<td data-th="">
+																<span class="db_tooltip" title="A forb is a herbaceous flowering plant that is not a grass, sedge or rush.">Herb/Forb</span><BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Sun Requirements:</td>
+															<td data-th="">Full Sun to Partial Shade<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Leaves:</td>
+															<td data-th="">Unusual foliage color<BR>
+Fragrant<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Flowers:</td>
+															<td data-th="">Showy<BR>
+Fragrant<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Uses:</td>
+															<td data-th="">Groundcover<BR>
+Culinary Herb<BR>
+Medicinal Herb<BR>
+Dried Flower<BR>
+Will Naturalize<BR>
+Suitable as Annual<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Wildlife Attractant:
+															</td>
+															<td data-th="">Bees<BR>
+Butterflies<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Propagation: Seeds:</td>
+															<td data-th="">Other info: Some mints can be propagated by
+																seed. Growth from seed can be unreliable for two
+																reasons: mint seeds are highly variable and some
+																varieties are sterile.<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Propagation: Other
+																methods:</td>
+															<td data-th="">Division<BR>
+Stolons and runners<BR>
+</td>
+														</tr>
+														<tr>
+															<td style="width:150px;" data-th="">Containers:</td>
+															<td data-th="">Suitable in 3 gallon or larger<BR>
+</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<P>
+										</div>
+										<div class="col-sm-6">
+											<center><img src="/pics/2016-07-07/Fleur569/01d40f-300.jpg" width="300" height="300" alt="Image" title="Image" class="thumb">
+												<P>
+													<!-- Tag ID: garden_medrec_right_atf_1 -->
+													<div align="center" data-freestar-ad="__300x250"
+														id="garden_medrec_right_atf_1">
+														<script data-cfasync="false" type="text/javascript">
+															freestar.config.enabled_slots.push({ placementName: "garden_medrec_right_atf_1", slotId: "garden_medrec_right_atf_1" });
+														</script>
+													</div>
+													<P>
+														<P>
+											</center>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default ">
+									<div class="panel-heading">Photo gallery:</div>
+									<div class="panel-body">
+										<center>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/403111/"><img src="/pics/2016-07-07/Fleur569/01d40f-175.jpg" width="175" height="175" alt="Location: Zone 5Date: 2016-07-06" title="Location: Zone 5Date: 2016-07-06" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/Fleur569/">Fleur569</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-403111-Fleur569-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-403111-Fleur569" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-403111" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/403111/">8</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/69858/"><img src="/pics/2012-02-24/jmorth/f888a9-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2011-08-14Hairstreak in mint" title="Location: central IllinoisDate: 2011-08-14Hairstreak in mint" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-69858-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-69858-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-69858" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/69858/">4</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/69860/"><img src="/pics/2012-02-24/jmorth/8be8d1-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2010-09-08spearmint" title="Location: central IllinoisDate: 2010-09-08spearmint" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-69860-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-69860-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-69860" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/69860/">4</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/69859/"><img src="/pics/2012-02-24/jmorth/67f96a-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2010-09-07Pearl Crescents in mint" title="Location: central IllinoisDate: 2010-09-07Pearl Crescents in mint" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-69859-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-69859-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-69859" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/69859/">3</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/681378/"><img src="/pics/2021-05-06/Lucius93/c23f07-175.jpg" width="175" height="175" alt="Date: 2021-05-06" title="Date: 2021-05-06" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/Lucius93/">Lucius93</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-681378-Lucius93-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-681378-Lucius93" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-681378" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/681378/">3</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/69856/"><img src="/pics/2012-02-24/jmorth/db747f-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2010-09-08Cabbage Whites in mint" title="Location: central IllinoisDate: 2010-09-08Cabbage Whites in mint" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-69856-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-69856-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-69856" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/69856/">2</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/69857/"><img src="/pics/2012-02-24/jmorth/1be146-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2010-09-08Buckeyes in mint" title="Location: central IllinoisDate: 2010-09-08Buckeyes in mint" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-69857-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-69857-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-69857" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/69857/">2</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/609077/"><img src="/pics/2019-12-29/jmorth/c213e9-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 8-28-19" title="Location: central IllinoisDate: 8-28-19" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-609077-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-609077-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-609077" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/609077/">2</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/103950/"><img src="/pics/2012-06-30/PiaLouiseSourvi/e33199-175.jpg" width="175" height="175" alt="Date: 2012-06-04[...unkown mint from Seasalter, U.K.]" title="Date: 2012-06-04[...unkown mint from Seasalter, U.K.]" class="plant_thumbimage"></a><br>By
+													<a
+														href="/users/profile/PiaLouiseSourvi/">PiaLouiseSourvi</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-103950-PiaLouiseSourvi-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-103950-PiaLouiseSourvi" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-103950" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/103950/">1</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/195384/"><img src="/pics/2013-08-16/dave/7cba2e-175.jpg" width="175" height="175" alt="Location: Jacksonville, TXDate: 2013-08-16" title="Location: Jacksonville, TXDate: 2013-08-16" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/dave/">dave</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-195384-dave-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-195384-dave" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-195384" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/195384/">1</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/195385/"><img src="/pics/2013-08-16/dave/583264-175.jpg" width="175" height="175" alt="Location: Jacksonville, TXDate: 2013-08-16" title="Location: Jacksonville, TXDate: 2013-08-16" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/dave/">dave</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-195385-dave-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-195385-dave" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-195385" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/195385/">1</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/195386/"><img src="/pics/2013-08-16/dave/65c8ca-175.jpg" width="175" height="175" alt="Location: Jacksonville, TXDate: 2013-08-16" title="Location: Jacksonville, TXDate: 2013-08-16" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/dave/">dave</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-195386-dave-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-195386-dave" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-195386" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_images/iid/195386/">1</a>)</span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/92931/"><img src="/pics/2012-05-29/Sharon/10c2bb-175.jpg" width="175" height="175" alt="Location: Western KentuckyDate: 2012-05-24" title="Location: Western KentuckyDate: 2012-05-24" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/Sharon/">Sharon</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-92931-Sharon-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-92931-Sharon" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-92931" title="Viewing Thumbs"> </span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/105050/"><img src="/pics/2012-07-02/PiaLouiseSourvi/2e34e5-175.jpg" width="175" height="175" alt="Date: 2012-07-06[...my favourite mint plant's stem.]" title="Date: 2012-07-06[...my favourite mint plant's stem.]" class="plant_thumbimage"></a><br>By
+													<a
+														href="/users/profile/PiaLouiseSourvi/">PiaLouiseSourvi</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-105050-PiaLouiseSourvi-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-105050-PiaLouiseSourvi" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-105050" title="Viewing Thumbs"> </span>
+
+
+
+
+											</div>
+											<div class="plant_thumbbox"><a
+													href="/plants/photo/359109/"><img src="/pics/2015-11-22/jmorth/2bfff6-175.jpg" width="175" height="175" alt="Location: central IllinoisDate: 2011-08-14" title="Location: central IllinoisDate: 2011-08-14" class="plant_thumbimage"></a><br>By
+													<a href="/users/profile/jmorth/">jmorth</a><BR><img src="/i/colorbox/loading.gif" id="plants_images-iid-359109-jmorth-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+													<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+														<span id="thumbs-plants_images-iid-359109-jmorth" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_images-iid-359109" title="Viewing Thumbs"> </span>
+
+
+
+
+											</div>
+										</center>
+									</div>
+								</div>
+								<P>
+									<div class="panel panel-default ">
+										<div class="panel-heading">This plant is tagged in:</div>
+										<div class="panel-body"><a
+												href="/plants/multi/view/2979/"><img src="/pics/2015-05-20/Paul2032/219411-250.jpg" width="250" height="250" alt="Image" title="Image" class="thumb"></a>
+												<a href="/plants/multi/view/4674/"><img src="/pics/2016-05-28/cliftoncat/d16ca3-250.jpg" width="250" height="250" alt="Image" title="Image" class="thumb"></a>
+										</div>
+									</div>
+									<P>
+										<div class="panel panel-default ">
+											<div class="panel-heading">Comments:</div>
+											<div class="panel-body">
+												<div>
+													<table
+														class="table table-striped table-bordered table-hover pretty-table">
+														<tbody>
+															<tr>
+																<td data-th="">Posted by <a
+																		href="/users/profile/SongofJoy/">SongofJoy</a>
+																	(Clarksville, TN - Zone 6b) on Feb 24, 2012 8:49 AM
+																	<P>Harvesting of mint leaves can be done any time.
+																		Fresh mint leaves can be stored up to a couple
+																		of days in plastic bags in the refrigerator.
+																		Fresh mint leaves can also be frozen in ice cube
+																		trays. Dried mint leaves should be stored in an
+																		airtight container placed in a cool, dark, dry
+																		area.<br>
+																		<br>
+Mints are used as food plants by the larvae of some Lepidoptera species including Buff Ermine.<br>
+																		<br>
+Mints are said to make good companion plants, repelling pest insects and attracting beneficial ones.  Mint oil is also used as an environmentally-friendly insecticide and is reported to kill some common pests like wasps, hornets, ants, and cockroaches.<br>
+																		<br>
+Mints are susceptible to whitefly and aphids. <br>
+																		<br>
+																		<br>
+																		<P>[ <a href="/thread/post/plants_comments/4045/"
+																				class="userlink">Reply to this
+																				comment</a> | <img src="/i/colorbox/loading.gif" id="plants_comments-cid-4045-SongofJoy-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+																			<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+																				<span id="thumbs-plants_comments-cid-4045-SongofJoy" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_comments-cid-4045" title="Viewing Thumbs">  (<a href="/thumbs/view/plants_comments/cid/4045/">2</a>)</span>
+
+
+
+
+																				]</td>
+															</tr>
+															<tr>
+																<td data-th="">Posted by <a
+																		href="/users/profile/Marilyn/">Marilyn</a>
+																	(Kentucky - Zone 6a) on May 20, 2013 9:38 PM<P>
+																		"Mints are aromatic, almost exclusively
+																		perennial, rarely annual, herbs. They have
+																		wide-spreading underground and overground
+																		stolons and erect, square, branched stems. The
+																		leaves are arranged in opposite pairs, from
+																		oblong to lanceolate, often downy, and with a
+																		serrate margin. Leaf colors range from dark
+																		green and gray-green to purple, blue, and
+																		sometimes pale yellow. The flowers are white to
+																		purple and produced in false whorls called
+																		verticillasters. The corolla is two-lipped with
+																		four subequal lobes, the upper lobe usually the
+																		largest. The fruit is a small, dry capsule
+																		containing one to four seeds.<br>
+																		<br>
+All mints prefer, and thrive in, cool, moist spots in partial shade. In general, mints tolerate a wide range of conditions, and can also be grown in full sun.<br>
+																		<br>
+They are fast growing, extending their reach along surfaces through a network of runners. Due to their speedy growth, one plant of each desired mint, along with a little care, will provide more than enough mint for home use. Some mint species are more invasive than others. Even with the less invasive mints, care should be taken when mixing any mint with any other plants, lest the mint take over. To control mints in an open environment, mints should be planted in deep, bottomless containers sunk in the ground, or planted above ground in tubs and barrels.<br>
+																		<br>
+The most common and popular mints for cultivation are peppermint (Mentha × piperita), spearmint (Mentha spicata), and (more recently) apple mint (Mentha suaveolens).<br>
+																		<br>
+Mints are supposed to make good companion plants, repelling pest insects and attracting beneficial ones. Mints are susceptible to whitefly and aphids."<br>
+																		<br>
+Taken from wikipedia's page at: <a href="https://en.wikipedia.org/wiki/Mentha"
+																			target="_blank">https://en.wikipedia.org/wiki/...</a><br>
+																		<br>
+																		<P>[ <a href="/thread/post/plants_comments/9200/"
+																				class="userlink">Reply to this
+																				comment</a> | <img src="/i/colorbox/loading.gif" id="plants_comments-cid-9200-Marilyn-wait" class="rwdicon" width="16" height="16" title="Waiting" alt="Waiting" style="display:none;">
+																			<a href="/not.php"><img src="/i/icon/tu-green.png" class="rwdicon" width="16" height="16" title="Login to give thumbs-ups" class="thumbgreen userlink" alt="Give a thumbs up"></a>
+																				<span id="thumbs-plants_comments-cid-9200-Marilyn" class="social_count" href="#" data-toggle="modal" data-target="#ModalNGAView" data-ngaview="thumbs_count-plants_comments-cid-9200" title="Viewing Thumbs"> </span>
+
+
+
+
+																				]</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<P>
+											<div>
+												<table
+													class="table table-striped table-bordered table-hover pretty-table">
+													<caption>Plant Events from our members</caption>
+													<tbody>
+														<tr>
+															<td data-th=""><a href="/users/profile/piksihk">piksihk</a>
+															</td>
+															<td data-th="">On August 12, 2018</td>
+															<td data-th="">Cuttings stuck<BR><i>WG square bed </i></td>
+														</tr>
+														<tr>
+															<td data-th=""><a
+																	href="/users/profile/lovesblooms">lovesblooms</a>
+															</td>
+															<td data-th="">On March 1, 2020</td>
+															<td data-th="">Seeds
+																sown<BR><i>labelled "spicy mint"; winter sow</i></td>
+														</tr>
+														<tr>
+															<td data-th=""><a
+																	href="/users/profile/lovesblooms">lovesblooms</a>
+															</td>
+															<td data-th="">On February 24, 2018</td>
+															<td data-th="">Seeds
+																sown<BR><i>winter sown; labeled "Spicy Mint" from trade</i>
+															</td>
+														</tr>
+														<tr>
+															<td data-th=""><a
+																	href="/users/profile/lovesblooms">lovesblooms</a>
+															</td>
+															<td data-th="">On January 28, 2017</td>
+															<td data-th="">Seeds
+																sown<BR><i>w/s; labeled "Spicy Mint" from trade</i></td>
+														</tr>
+													</tbody>
+												</table>
+											</div><a href="/plants/propose/event_report/242686/"
+												class="userlink">&raquo; Post your own event for this plant</a>
+											<P>
+												<div class="panel panel-default ">
+													<div class="panel-heading">Discussion Threads about this plant</div>
+													<div class="panel-body">
+														<div>
+															<table
+																class="table table-striped table-bordered table-hover pretty-table table_has_headers">
+																<thead>
+																	<tr class="1632984139">
+																		<th class="1632984139">Thread Title</th>
+																		<th class="1632984139">Last Reply</th>
+																		<th class="1632984139">Replies</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/153358/My-friend-received-a-bag-of-mystery-seeds-and-doesnt-know-what-it-is/">My
+																				friend received a bag of mystery seeds
+																				and doesn't know what it is.</a> by
+																			laksunn</td>
+																		<td data-th="Last Reply">Aug 19, 2021 2:03 PM
+																		</td>
+																		<td data-th="Replies">11</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/152526/Mojito-Mint-and-Spearmint-Kentucky-Colonel/">Mojito
+																				Mint and Spearmint "Kentucky
+																				Colonel"</a> by MarkoVn</td>
+																		<td data-th="Last Reply">Jul 29, 2021 5:59 PM
+																		</td>
+																		<td data-th="Replies">1</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/151926/Trading-Lemon-Queen-Sunflower-McKana-Columbine/">Trading
+																				'Lemon Queen' Sunflower & 'McKana'
+																				Columbine</a> by mamabear49093</td>
+																		<td data-th="Last Reply">Jul 24, 2021 4:46 AM
+																		</td>
+																		<td data-th="Replies">1</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/146371/What-happened-to-my-mint-overnight/">What
+																				happened to my mint overnight?</a> by
+																			Laura486</td>
+																		<td data-th="Last Reply">Apr 13, 2021 7:14 AM
+																		</td>
+																		<td data-th="Replies">10</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/139581/Help-with-the-herb/">Help
+																				with the herb</a> by nov1ce</td>
+																		<td data-th="Last Reply">Oct 30, 2020 2:51 PM
+																		</td>
+																		<td data-th="Replies">10</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/138375/Whats-wrong-with-my-Mint/">What's
+																				wrong with my Mint?</a> by kenn_k14</td>
+																		<td data-th="Last Reply">Oct 2, 2020 1:32 PM
+																		</td>
+																		<td data-th="Replies">2</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/131284/Time-to-post-variegated-gold-purple-spotted-all-colors-of-the-rainbow-foliage/">Time
+																				to post variegated, gold, purple,
+																				spotted all colors of the rainbow
+																				foliage</a> by bumplbea</td>
+																		<td data-th="Last Reply">Oct 25, 2020 7:59 AM
+																		</td>
+																		<td data-th="Replies">249</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/128861/What-type-of-mint-is-this-Can-I-eat/">What
+																				type of mint is this? Can I eat?</a> by
+																			zhujie2088</td>
+																		<td data-th="Last Reply">May 26, 2020 9:15 PM
+																		</td>
+																		<td data-th="Replies">1</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/126861/ISO-Red-Birds-in-a-Tree-Scrophularia-macrantha/">ISO
+																				Red Birds in a Tree (Scrophularia
+																				macrantha)</a> by RoseA32</td>
+																		<td data-th="Last Reply">May 7, 2020 11:35 AM
+																		</td>
+																		<td data-th="Replies">0</td>
+																	</tr>
+																	<tr>
+																		<td data-th="Thread Title"><a
+																				href="/thread/view/126193/Help-me-plan-a-butterfly-garden-Please/">Help
+																				me plan a butterfly garden Please</a> by
+																			Mindy03</td>
+																		<td data-th="Last Reply">Jun 24, 2021 7:13 PM
+																		</td>
+																		<td data-th="Replies">21</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+												<P>
+													<P>
+														<center>
+															<!-- Tag ID: garden_leaderboard_btf_2 -->
+															<div align="center" data-freestar-ad="__320x100 __970x250"
+																id="garden_leaderboard_btf_2">
+																<script data-cfasync="false" type="text/javascript">
+																	freestar.config.enabled_slots.push({ placementName: "garden_leaderboard_btf_2", slotId: "garden_leaderboard_btf_2" });
+																</script>
+															</div>
+														</center>
+														<P>
+															<P>
+																<div class="panel panel-default ">
+																	<div class="panel-body"><B>Adding Actions:</B>
+																		<P><a href="/plants/propose/ajax_photo/242686/"
+																				class="userlink">&raquo; Upload a
+																				photo</a><br><a
+																				href="/plants/add_comment.php?pid=242686"
+																				class="userlink">&raquo; Post a
+																				comment</a><BR><a
+																				href="/plants/propose/event_report/242686/"
+																				class="userlink">&raquo; Add an event
+																				report</a><br>
+																			<P>
+																				<p>
+																	</div>
+																</div>
+																<P><a href="/plants/propose/new_plant/"
+																		class="userlink">&laquo; Add a new plant to the
+																		database</a>
+																	<P><a href="/plants/">&laquo; The Plants Database
+																			Front Page</a>
+						</div>
+					</div>
+				</div>
+				<div id="atpfooter">
+					<div class="container-fluid">
+						<div class="col-sm-4">
+							<a href="/">Garden.org Homepage</a><BR>
+							<a href="/help/">Help using the site</a><BR>
+							<a href="/about/">About</a><BR>
+							<a href="/about/contact/">Contact</a><BR>
+							<a href="/about/tos/">Terms of Service</a><BR>
+							<a href="/about/privacy/">Privacy</a><BR>
+							<a href="/users/memberlist/">Memberlist</a><BR>
+							<a href="/special/acorns/">Acorns</a><BR>
+							<a href="/about/links/">Links</a><BR>
+							<a href="/apps/ask/">Ask a Question</a><BR>
+							<a href="/getstarted/">Getting Started Gardening</a><BR>
+							<a href="/newsletter/">Newsletter</a><BR>
+
+							<p>&copy; 1972 - 2021 <a href="/">National Gardening Association</a>
+								<p>
+									Times are presented in US Central Standard Time<p>
+						</div>
+						<div class="col-sm-2 text-left">
+							<a
+								href="https://www.pinterest.com/ngagrows/"><i class="fa fa-pinterest-square fa-fw fa-2x"></i>Pinterest</a><br>
+							<a
+								href="https://www.facebook.com/Garden.Org/"><i class="fa fa-facebook-square fa-fw fa-2x"></i>Facebook</a><br>
+							<a
+								href="https://www.youtube.com/user/nationalgardening"><i class="fa fa-youtube-square fa-fw fa-2x"></i>Youtube</a><br>
+							<a
+								href="https://twitter.com/NatlGardening"><i class="fa fa-twitter-square fa-fw fa-2x"></i>Twitter</a><br>
+							<a
+								href="https://www.instagram.com/nationalgardeningassoc/"><i class="fa fa-instagram fa-fw fa-2x"></i>Instagram</a><br>
+    </div>
+							<div class="col-sm-6 text-right">
+								<p>Today's site banner is by <a href="/users/profile/dirtdorphins/">dirtdorphins</a> and
+									is called "<a href="/thread/go/154942/">Allumez le Feu</a>"<p>
+										<P>This site is protected by reCAPTCHA and the Google
+											<a href="https://policies.google.com/privacy">Privacy Policy</a> and
+											<a href="https://policies.google.com/terms">Terms of Service</a> apply.
+							</div>
+						</div>
+					</div>
+					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+					<script src="/i/js/nga_20170818.js"></script>
+					<script>
+						ga('send', 'pageview');
+					</script>
+</body>
+
+</html>

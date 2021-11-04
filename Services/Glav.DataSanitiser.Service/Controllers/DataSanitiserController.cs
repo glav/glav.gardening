@@ -18,16 +18,16 @@ namespace Glav.DataSanitiser.Controllers
             _logger = logger;
         }
 
-        [HttpPost("/GardenOrgSearchResults")]  // when hosting via dapr, we want this to be at the root since we will be 
-        //[HttpPost("GardenOrgSearchResults")]
-        public GardenOrgSearchSanitisedData SanitiseGardenOrgSearchResults([FromBody]string dataToSanitise)
-        {
-            _logger.LogInformation("Parsing and extracting data for Garrden.Org");
-            var gardenOrgParser = new GardenOrgSearchResultsParser();
-            var searchResults = gardenOrgParser.ParseData(dataToSanitise);
-            return new GardenOrgSearchSanitisedData { SearchResults = searchResults };
+        //[HttpPost("/GardenOrgSearchResults")]  // when hosting via dapr, we want this to be at the root since we will be 
+        ////[HttpPost("GardenOrgSearchResults")]
+        //public GardenOrgSearchSanitisedData SanitiseGardenOrgSearchResults([FromBody]string dataToSanitise)
+        //{
+        //    _logger.LogInformation("Parsing and extracting data for Garrden.Org");
+        //    var gardenOrgParser = new GardenOrgSearchResultsParser();
+        //    var searchResults = gardenOrgParser.ParseData(dataToSanitise);
+        //    return new GardenOrgSearchSanitisedData { SearchResults = searchResults };
 
 
-        }
+        //}
     }
 }

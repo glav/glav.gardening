@@ -30,8 +30,11 @@ namespace Glav.InformationGathering.Controllers
             var endpoint = _configuration["endpoints:datasanitiser"];
 
             // Ensure we use the 'DAPR_HTTP_PORT' environment variable here and replace with the port below
+            var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
+            Console.WriteLine($"DAPR-PORT: {daprPort}");
 
-            var daprEndpoint = "localhost:3500/v1.0/invoke/sanitiserapp/method/GardenOrgSearchResults";
+
+            var daprEndpoint = $"localhost:{daprPort}/v1.0/invoke/sanitiserapp/method/GardenOrgSearchResults";
             // Kick off the gathering process to retrieve data from all known sources
             await Task.FromResult(0);
         }

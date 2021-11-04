@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Glav.DataSanitiser
+namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
 {
     public class GardenOrgSearchResultsParser
     {
@@ -15,7 +15,6 @@ namespace Glav.DataSanitiser
             {
                 return searchResults;
             }
-            var builder = new StringBuilder();
 
             int pos=0,cnt=0;
             
@@ -30,7 +29,9 @@ namespace Glav.DataSanitiser
                     var hrefResult = content.Substring(posStartQuotes+1,posEndQuotes-posStartQuotes-1);
                     var posStartText = content.IndexOf('>',posEndQuotes);
                     var posEndText = content.IndexOf("</a>",posStartText);
-                    var searchTextResult = content.Substring(posStartText+1,posEndText-posStartText-1);
+                    var searchTextResult = content
+                        .Substring(posStartText + 1, posEndText - posStartText - 1)
+                        .Replace("\n", string.Empty);
                     searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult});
                     pos = posEndText;
                 }
