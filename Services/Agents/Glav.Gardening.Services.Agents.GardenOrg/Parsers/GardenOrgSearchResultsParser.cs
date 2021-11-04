@@ -30,7 +30,7 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
                     var posStartText = content.IndexOf('>',posEndQuotes);
                     var posEndText = content.IndexOf("</a>",posStartText);
                     var searchTextResult = content.Substring(posStartText+1,posEndText-posStartText-1);
-                    searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult});
+                    searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult.Replace("\n",string.Empty)});
                     pos = posEndText;
                 }
             }
