@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Glav.Gardening.Communications
 {
-    public class HttpProtocol : ICommunicationProtocol
+    public class HttpCommunicationProxy : ICommunicationProxy
     {
-        private readonly ILogger<HttpProtocol> _logger;
+        private readonly ILogger<HttpCommunicationProxy> _logger;
 
-        public HttpProtocol(ILogger<HttpProtocol> logger)
+        public HttpCommunicationProxy(ILogger<HttpCommunicationProxy> logger)
         {
             _logger = logger;
         }
@@ -23,7 +23,7 @@ namespace Glav.Gardening.Communications
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
-            client.DefaultRequestHeaders.Add("User-Agent", "query/agent - gardenorg");  // Must add this or gardenOrg returns no results.
+            client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
             var result = await client.GetAsync(queryUrl);
             var content = await GetZipBody(result);
             return content;

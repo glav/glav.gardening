@@ -14,8 +14,8 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
         private readonly ILogger<GardenOrgWebsiteAgent> _logger;
         private int _progress = 0;
         const string queryUrl = "https://garden.org/plants/search/text/?q={0}";
-        private readonly ICommunicationProtocol _commsProtocol;
-        public GardenOrgWebsiteAgent(ILogger<GardenOrgWebsiteAgent> logger, ICommunicationProtocol commsProtocol)
+        private readonly ICommunicationProxy _commsProtocol;
+        public GardenOrgWebsiteAgent(ILogger<GardenOrgWebsiteAgent> logger, ICommunicationProxy commsProtocol)
         {
             _logger = logger;
             _commsProtocol = commsProtocol;
