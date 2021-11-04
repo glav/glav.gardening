@@ -25,6 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C5CE532-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glav.Gardening.Communications", "Core\Glav.Gardening.Communications\Glav.Gardening.Communications.csproj", "{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{3054245E-55E1-4E59-9CC9-E856B977C552}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{BB5852FB-73C3-44D0-99B8-21A2754081A4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +74,7 @@ Global
 		{C4C25BF4-9FE2-4C16-AFB8-209DD21F2132} = {E070D4D1-2ADE-40C1-B12C-0E9609B2C6A8}
 		{68762775-3C12-4463-843E-162729E8D4E7} = {D8CBBC2B-353A-4983-8A7E-85C876889BF5}
 		{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA} = {9C5CE532-E235-48D9-BE50-CD16E92DDBF6}
+		{BB5852FB-73C3-44D0-99B8-21A2754081A4} = {3054245E-55E1-4E59-9CC9-E856B977C552}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A88D64E-B6AA-4E75-90C7-1A3976B7E363}
