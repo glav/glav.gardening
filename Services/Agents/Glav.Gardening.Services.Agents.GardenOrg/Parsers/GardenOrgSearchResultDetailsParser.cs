@@ -56,16 +56,24 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
 
         private string[] StripHtmlAndRemoveCrLf(string content)
         {
-            var cleanedContent = Regex.Replace(content, "<.*?>", String.Empty).Split("\r\n");
-            if (cleanedContent == null || cleanedContent.Length == 0)
+            var cleanedContent = Regex.Replace(content, "<.*?>", String.Empty).Split("\r\n").ToList();
+            if (cleanedContent == null || cleanedContent.Count == 0)
             {
                 return new string[] { };
             }
-            if (string.IsNullOrWhiteSpace(cleanedContent[cleanedContent.Length-1]))
+
+            cleanedContent.ForEach(item =>
             {
-                Array.Resize(ref cleanedContent, cleanedContent.Length - 1);
+                item = item
+                    .Replace("\n", string.Empty)
+                    .Replace("\r", string.Empty);
+
+            });
+            if (string.IsNullOrWhiteSpace(cleanedContent[cleanedContent.Count-1]))
+            {
+                cleanedContent.RemoveAt(cleanedContent.Count - 1);
             }
-            return cleanedContent;
+            return cleanedContent.ToArray();
 
         }
     }

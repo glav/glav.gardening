@@ -29,8 +29,10 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
                     var hrefResult = content.Substring(posStartQuotes+1,posEndQuotes-posStartQuotes-1);
                     var posStartText = content.IndexOf('>',posEndQuotes);
                     var posEndText = content.IndexOf("</a>",posStartText);
-                    var searchTextResult = content.Substring(posStartText+1,posEndText-posStartText-1);
-                    searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult.Replace("\n",string.Empty)});
+                    var searchTextResult = content
+                        .Substring(posStartText + 1, posEndText - posStartText - 1)
+                        .Replace("\n", string.Empty);
+                    searchResults.Add(new GardenOrgSearchResultItem{ Href = hrefResult, ResultText = searchTextResult});
                     pos = posEndText;
                 }
             }
