@@ -62,12 +62,27 @@ namespace Glav.Gardening.Services.Agents.GardenOrg.Parsers
                 return new string[] { };
             }
 
-            if (string.IsNullOrWhiteSpace(cleanedContent[cleanedContent.Length-1]))
+            var workList = new List<string>();
+            foreach (var item in cleanedContent)
+            {
+                var tmpList = item.Split("<BR>")
+                    .Where(l => !string.IsNullOrWhiteSpace(l));
+                if (tmpList == null || tmpList.Count() == 0) continue;
+                var workArray = tmpList.ToArray();
+                return RemoveEndElelementIfEmpty(ref workArray);
+            }
+
+            return RemoveEndElelementIfEmpty(ref cleanedContent);
+
+        }
+
+        private static string[] RemoveEndElelementIfEmpty(ref string[] cleanedContent)
+        {
+            if (string.IsNullOrWhiteSpace(cleanedContent[cleanedContent.Length - 1]))
             {
                 Array.Resize(ref cleanedContent, cleanedContent.Length - 1);
             }
             return cleanedContent.ToArray();
-
         }
     }
 
