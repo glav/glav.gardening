@@ -1,0 +1,123 @@
+trigger:
+ branches:
+   include:
+   - master
+ paths:
+   include:
+   - 5ms/BidsMarketApiV2
+
+
+pool:
+  vmImage: 'windows-latest'
+
+stages:
+- stage: ValidateFunctionsInfra
+  jobs:
+  - job: Validate
+    steps:
+    - task: CmdLine@2
+      displayName: "Build bicep templates"
+      inputs:
+        script: 'az bicep build -f ./5ms/BidsMarketApiV2/infrastructure/5ms-functions-bids-market-v2-template.bicep'
+    - publish: $(System.DefaultWorkingDirectory)/5ms/BidsMarketApiV2/infrastructure
+      artifact: infrastructure
+
+- stage: BuildFunctions
+  jobs:
+  - job: BuildFunctions
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Market Function'
+      inputs:
+        command: 'build'
+        projects: |
+          $(System.DefaultWorkingDirectory)/5ms/BidsMarketApiV2/functions/5msMarketApi/5msMarketApi.csproj
+        arguments: --output $(System.DefaultWorkingDirectory)/publish_output/MarketFunction --configuration $(buildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Bids Function'
+      inputs:
+        command: 'build'
+        projects: |
+          $(System.DefaultWorkingDirectory)/5ms/BidsMarketApiV2/functions/5msBidsApi/5msBidsApi.csproj
+        arguments: --output $(System.DefaultWorkingDirectory)/publish_output/BidsFunction --configuration $(buildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: 'test'
+        projects: |
+          $(System.DefaultWorkingDirectory)/5ms/BidsMarketApiV2/Tests/InfigenAPI.Tests.Unit/Infigen5msApi.Tests.Unit.csproj
+        arguments: --configuration $(buildConfiguration) --logger trx --collect "Code coverage"
+    - task: PublishTestResults@2
+      displayName: 'Publish test results'
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
+    - task: ArchiveFiles@2
+      displayName: 'Archive Market function'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/publish_output/MarketFunction'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/MarketFunction_$(Build.BuildId).zip
+        replaceExistingArchive: true
+    - task: ArchiveFiles@2
+      displayName: 'Archive Bids function'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/publish_output/BidsFunction'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/BidsFunction_$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: functions
+
+
+- stage: DeployToStaging
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: DeployStaging
+    environment: 'stg'
+    variables: 
+    - group: 'API V2 5MS Bids-Market STG'
+    strategy:
+     runOnce:
+      deploy:
+        steps:
+        - template: deploy-template.yml
+          parameters:
+            serviceConnectionName: service_connection_stg_api_platform
+            resourceGroupName: stg_api_platform
+
+- stage: DeployToSIT
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: DeploySIT
+    environment: 'sit'
+    variables: 
+    - group: 'API V2 5MS Bids-Market SIT'
+    strategy:
+     runOnce:
+      deploy:
+        steps:
+        - template: deploy-template.yml
+          parameters:
+            serviceConnectionName: 'SIT API Principal'
+            resourceGroupName: AZRSIT_API_Platform
+
+- stage: DeployToProd
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: DeployProduction
+    environment: 'prd'
+    variables: 
+    - group: 'API V2 5MS Bids-Market PROD'
+    strategy:
+     runOnce:
+      deploy:
+        steps:
+        - template: deploy-template.yml
+          parameters:
+            serviceConnectionName: 'PROD API principal'
+            resourceGroupName: PRDAZR_API_Platform
+

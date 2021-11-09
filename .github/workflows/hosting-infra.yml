@@ -1,0 +1,14 @@
+name: Build Environment
+
+on:
+  push:
+    branches: main
+
+jobs:
+  spinup:
+    runs-on: ubuntu-latest
+    environment:
+      name: DevTest
+    steps:
+      - uses: actions/checkout@v2
+#use az cli to build AKS -- will rsource gorup first
