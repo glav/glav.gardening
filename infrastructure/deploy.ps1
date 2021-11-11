@@ -118,7 +118,7 @@ try {
 
   $aksClusterName = "aksgardening$Environment"
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
-  $aksResult = (az aks create --resource-group $ResourceGroupName --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
   ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
   
   Write-Host "*******"
