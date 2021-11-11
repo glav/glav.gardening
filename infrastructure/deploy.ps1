@@ -64,6 +64,20 @@ function Ensure-KeyVaultSecretExists([string] $secretName, [string]$defaultValue
   }
     
 }
+
+function ThrowIfNullResult($result, [string] $message)
+{
+  if ($null -eq $message -or $message -eq "")
+  {
+    $message = "An error occurred performing a deployment or executing an action"
+  }
+  if ($null -eq $result)
+  {
+     Write-Host $message
+     throw $message
+  }
+
+}
 ###############################################################################
 ## Start of script
 ###############################################################################
@@ -105,7 +119,8 @@ try {
   $aksClusterName = "aks-gardening-$Location"
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
   $aksResult = (az aks create --resource-group $ResourceGroupName --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
-
+  ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
+  
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"
   Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$ResourceGroupName'"
