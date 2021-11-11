@@ -1,14 +1,24 @@
 name: Build Environment
 
-on:
-  push:
-    branches: main
+# Manual trigger for now
+on:  workflow_dispatch
 
 jobs:
   spinup:
     runs-on: ubuntu-latest
     environment:
       name: DevTest
+    env:
+      ENVIRONMENT: dev
     steps:
       - uses: actions/checkout@v2
+
+      - name: Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true 
+
+      - name: Execute Infrastructure script
+        run: ../../Infrastructure/deploy.ps1 -Environment ${{ env.ENVIRONMENT }}
 #use az cli to build AKS -- will rsource gorup first

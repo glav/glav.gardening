@@ -13,7 +13,7 @@ Param (
   [string] $Environment,
 
   [Int16] $ClusterNodeCount = 1,
-  [Int16] $DaysToLive = 21,
+  [Int16] $DaysToLive = 14,
   [string] $Purpose='personal-use'
   
 )
@@ -125,86 +125,50 @@ try {
   #Ensure-KeyVaultSecretExists -secretName "EnergyOfferDirectDbConnectionString" -defaultValue "ENERGY-OFFER-DIRECT-DB-CONNECTION-STRING"
   
 
-  Write-Host "Compiling functions infrastructure bicep template to: " $functionsArmTemplatePath
-  az bicep build -f $functionsBicepTemplatePath 
+  
+  # Write-Host "Compiling functions infrastructure bicep template to: " $functionsArmTemplatePath
+  # az bicep build -f $functionsBicepTemplatePath 
 
-  $functionParams = @{
-    "environment"                         = $Environment;
-    "marketAppName"                       = $MarketAppName;
-    "keyvaultName"                        = $KeyVaultInstanceName;
-    "bidsAppName"                         = $BidsAppName;
-    "energyOfferEndpoint"                 = $EnergyOfferEndpoint;
-    "energyOfferSubmitBidUriFragment"     = $EnergyOfferSubmitBidUriFragment;
-    "energyOfferBidStatusUriFragment"     = $EnergyOfferBidStatusUriFragment;
-    "energyOfferApiUser"                  = $EnergyOfferApiUser;
-    "duidsToQuery"                        = $DuidsToQuery;
-    "shouldLogRequestsToApi"              = $ShouldLogRequestsToApi;
-    "shouldLogRequestsToEnergyOffer"      = $ShouldLogRequestsToEnergyOffer;
-    "shouldMockBidsetResponse"            = $ShouldMockBidsetResponse;
-    "shouldMockBidSubmissionResponse"     = $ShouldMockBidSubmissionResponse;
-    "hostingPlanName"                     = $HostingPlanName;
-    "hostinPlanSkuTier"                   = $HostinPlanSkuTier;
-    "hostinPlanSkuName"                   = $HostinPlanSkuName;
-    "storageAccountType"                  = $StorageAccountType;
-    "onPremisesVNETResourceId"            = $OnPremisesVNETResourceId;
-    "applicationInsightsName"             = $ApplicationInsightsName;
-  }
+  # $functionParams = @{
+  #   "environment"                         = $Environment;
+  #   "marketAppName"                       = $MarketAppName;
+  #   "keyvaultName"                        = $KeyVaultInstanceName;
+  #   "bidsAppName"                         = $BidsAppName;
+  #   "energyOfferEndpoint"                 = $EnergyOfferEndpoint;
+  #   "energyOfferSubmitBidUriFragment"     = $EnergyOfferSubmitBidUriFragment;
+  #   "energyOfferBidStatusUriFragment"     = $EnergyOfferBidStatusUriFragment;
+  #   "energyOfferApiUser"                  = $EnergyOfferApiUser;
+  #   "duidsToQuery"                        = $DuidsToQuery;
+  #   "shouldLogRequestsToApi"              = $ShouldLogRequestsToApi;
+  #   "shouldLogRequestsToEnergyOffer"      = $ShouldLogRequestsToEnergyOffer;
+  #   "shouldMockBidsetResponse"            = $ShouldMockBidsetResponse;
+  #   "shouldMockBidSubmissionResponse"     = $ShouldMockBidSubmissionResponse;
+  #   "hostingPlanName"                     = $HostingPlanName;
+  #   "hostinPlanSkuTier"                   = $HostinPlanSkuTier;
+  #   "hostinPlanSkuName"                   = $HostinPlanSkuName;
+  #   "storageAccountType"                  = $StorageAccountType;
+  #   "onPremisesVNETResourceId"            = $OnPremisesVNETResourceId;
+  #   "applicationInsightsName"             = $ApplicationInsightsName;
+  # }
  
-  Write-Host "Beginning functions infrastructure ARM deployment"
-  $functionsArmDeployResult = New-AzResourceGroupDeployment `
-    -Name "5msMarketBidsFunctionsInfrav2" `
-    -ResourceGroupName $ResourceGroupName `
-    -TemplateFile $functionsArmTemplatePath `
-    -TemplateParameterObject $functionParams `
-    -ErrorAction Continue
+  # Write-Host "Beginning functions infrastructure ARM deployment"
+  # $functionsArmDeployResult = New-AzResourceGroupDeployment `
+  #   -Name "5msMarketBidsFunctionsInfrav2" `
+  #   -ResourceGroupName $ResourceGroupName `
+  #   -TemplateFile $functionsArmTemplatePath `
+  #   -TemplateParameterObject $functionParams `
+  #   -ErrorAction Continue
 
-  if (-not $functionsArmDeployResult -or $functionsArmDeployResult.ProvisioningState -ne "Succeeded") {
+  # if (-not $functionsArmDeployResult -or $functionsArmDeployResult.ProvisioningState -ne "Succeeded") {
 
-    Write-Host (ConvertTo-Json $functionsArmDeployResult)
+  #   Write-Host (ConvertTo-Json $functionsArmDeployResult)
   
-    #regardless of why we didn't succeed, throw an error here
-    throw "An error occurred deploying resources with ARM and we're not sure why. There's probably more error info in the output above."
-  }
+  #   #regardless of why we didn't succeed, throw an error here
+  #   throw "An error occurred deploying resources with ARM and we're not sure why. There's probably more error info in the output above."
+  # }
   
-  $marketFunctionUrl = Get-FunctionUrl $functionsArmDeployResult.outputs.marketFunctionHostname.Value
-  $marketFunctionApiKey = $functionsArmDeployResult.outputs.marketFunctionApiKey.Value
-  $bidsFunctionUrl = Get-FunctionUrl $functionsArmDeployResult.outputs.bidsFunctionHostname.Value
-  $bidsFunctionApiKey = $functionsArmDeployResult.outputs.bidsFunctionApiKey.Value
-  
-  Write-Host "Function deployment complete"
-  Write-Host "MarketFunctionHostname: " $functionsArmDeployResult.outputs.marketFunctionHostname.value
-  Write-Host "BidsFunctionHostname: " $functionsArmDeployResult.outputs.bidsFunctionHostname.value
-    
-  ###############################################################################
-  ## APIM - Bids/Market/Notifications
-  ###############################################################################
-
-  Write-Host "Beginning APIM Infrastructure Bids/Market/Notifications API v2 deployment"
-
-  $apimParms = @{
-    "properties_market_v2_api_code"       = $marketFunctionApiKey;
-    "service_InfigenAPI_name"             = $InfigenApiManagementName;
-    "properties_market_v2_api_url"        = $marketFunctionUrl;
-    "properties_bids_v2_api_code"         = $bidsFunctionApiKey
-    "properties_bids_v2_api_url"          = $bidsFunctionUrl
-    "properties_notification_v2_api_code" = $NotificationV2ApiCode
-    "properties_notification_v2_api_url"  = $NotificationV2ApiUrl
-  }
-  
-  $apimArmDeployResult = New-AzResourceGroupDeployment `
-    -Name "5msBidsMarketNotificationsApimV2-$(Get-Date -Format FileDateTimeUniversal)" `
-    -ResourceGroupName $ResourceGroupName `
-    -TemplateFile $bidsMarketApimTemplatePath `
-    -TemplateParameterObject $apimParms `
-    -ErrorAction Continue
-
-  if (-not $apimArmDeployResult -or $apimArmDeployResult.ProvisioningState -ne "Succeeded") {
-
-    Write-Host (ConvertTo-Json $apimArmDeployResult)
-
-    #regardless of why we didn't succeed, throw an error here
-    throw "An error occurred deploying resources with ARM and we're not sure why. There's probably more error info in the output above."
-  }
+  # Write-Host "Function deployment complete"
+   
 
 }
 catch {
