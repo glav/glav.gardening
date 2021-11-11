@@ -105,6 +105,11 @@ try {
   $aksClusterName = "aks-gardening-$Location"
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
   $aksResult = (az aks create --resource-group $ResourceGroupName --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  if ($null -eq $aksResult)
+  {
+     Write-Host "Error creating/updating AKS Cluster"
+     throw "An error occurred deploying AKS Cluster"
+  }
 
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"
