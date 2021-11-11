@@ -3,9 +3,9 @@ name: Build Environment
 # Manual trigger for now
 on:  
   workflow_dispatch:
-  paths-ignore:
-    - 'Infrastructure/**'
-    - 'Design/**'
+    paths-ignore:
+      - 'Infrastructure/**'
+      - 'Design/**'
 
 jobs:
   spinup:
