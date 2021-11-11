@@ -1,0 +1,69 @@
+parameters:
+  - name: serviceConnectionName
+    type: string
+  - name: resourceGroupName
+    type: string
+
+steps:
+- task: AzurePowerShell@5
+  displayName: 'Provision Azure Resources'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    ScriptType: 'FilePath'
+    azurePowerShellVersion: 'LatestVersion'
+    pwsh: true
+    ScriptPath: '$(Pipeline.Workspace)/infrastructure/deploy.ps1'
+    ScriptArguments:
+      -SubscriptionId '$(SubscriptionId)' `
+      -ResourceGroupName ${{ parameters.resourceGroupName }} `
+      -Environment '$(Environment)' `
+      -MarketAppName '$(marketAppName)' `
+      -BidsAppName '$(bidsAppName)' `
+      -EnergyOfferEndpoint '$(energyOfferEndpoint)' `
+      -EnergyOfferSubmitBidUriFragment '$(energyOfferSubmitBidUriFragment)' `
+      -EnergyOfferBidStatusUriFragment '$(energyOfferBidStatusUriFragment)' `
+      -EnergyOfferApiUser '$(energyOfferApiUser)' `
+      -DuidsToQuery '$(duidsToQuery)' `
+      -ShouldLogRequestsToApi '$(shouldLogRequestsToApi)' ` 
+      -ShouldLogRequestsToEnergyOffer '$(shouldLogRequestsToEnergyOffer)' `
+      -ShouldMockBidsetResponse '$(shouldMockBidsetResponse)' ` 
+      -ShouldMockBidSubmissionResponse '$(shouldMockBidSubmissionResponse)' `
+      -HostingPlanName '$(hostingPlanName)' `
+      -HostinPlanSkuTier '$(hostinPlanSkuTier)' `
+      -hostinPlanSkuName '$(hostinPlanSkuName)' `
+      -StorageAccountType '$(storageAccountType)' `
+      -OnPremisesVNETResourceId '$(onPremisesVNETResourceId)' `
+      -KeyVaultInstanceName '$(keyVaultName)' `
+      -ApplicationInsightsName '$(applicationInsightsName)' `
+      -InfigenApiManagementName '$(ApiManagementName)' `
+      -NotificationV2ApiCode '$(notificationV2ApiCode)' `
+      -NotificationV2ApiUrl '$(notificationV2ApiUrl)' `
+      -ForecastApiCode '$(forecastApiCode)' `
+      -ForecastApiUrl '$(forecastApiUrl)'
+    workingDirectory: '$(Pipeline.Workspace)/infrastructure'
+
+- task: DownloadPipelineArtifact@2
+  condition: succeeded()
+  inputs:
+    buildType: 'current'
+    targetPath: '$(Pipeline.Workspace)'
+
+- task: AzureFunctionApp@1
+  condition: succeeded()
+  displayName: 'Deploy Market Azure function'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    appType: 'functionApp'
+    appName: $(marketAppName)
+    package: '$(Pipeline.Workspace)/functions/MarketFunction_$(Build.BuildId).zip'
+    deploymentMethod: 'auto'
+
+- task: AzureFunctionApp@1
+  condition: succeeded()
+  displayName: 'Deploy Bids Azure function'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    appType: 'functionApp'
+    appName: $(bidsAppName)
+    package: '$(Pipeline.Workspace)/functions/BidsFunction_$(Build.BuildId).zip'
+    deploymentMethod: 'auto'
