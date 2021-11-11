@@ -26,5 +26,5 @@ jobs:
       - shell: pwsh
         name: Execute Infrastructure script
         run: |
-          $GITHUB_WORKSPACE/infrastructure/deploy.ps1 -Environment ${{ env.ENVIRONMENT }} -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+          infrastructure/deploy.ps1 -Environment ${{ env.ENVIRONMENT }} -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID}}
 #use az cli to build AKS -- will rsource gorup first
