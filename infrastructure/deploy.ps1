@@ -111,6 +111,7 @@ try {
 
   Write-Host "Beginning Infrastructure deploymment. Ensuring Resource Group '$ResourceGroupName' exists"
   $rgResult = (az group create -n $rg -l $Location) | ConvertFrom-Json
+  ThrowIfNullResult -result $rgResult -message "Error creating/updating resource group"
 
   Write-Host " .. Setting expiresOn, Environment and Usage tags"
   $expiry = ((Get-Date).AddDays($DaysToLive)).ToString('yyyy-MM-dd')
@@ -118,12 +119,12 @@ try {
 
   $aksClusterName = "aksgardening$Environment"
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
-  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
   ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
   
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"
-  Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$ResourceGroupName'"
+  Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$rg'"
   Write-Host "*******"
   
 #  $bidsMarketApimTemplatePath = Join-Path $PSScriptRoot "api-management-template-bids-market-v2.json"

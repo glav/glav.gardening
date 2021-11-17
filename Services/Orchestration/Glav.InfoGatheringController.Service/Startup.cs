@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Glav.Gardening.Communications;
+using Glav.InformationGathering.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,9 @@ namespace Glav.InformationGathering
         {
 
             services.AddControllers();
+            services.AddTransient<ICommunicationProxy, HttpCommunicationProxy>();
+            services.AddTransient<IDaprCommunicationProxy, DaprCommunicationProxy>();
+            services.AddTransient<IInformationGatheringOrchestrator, InformationGatheringOrchestrator>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Information Gathering Controller", Version = "v1" });
