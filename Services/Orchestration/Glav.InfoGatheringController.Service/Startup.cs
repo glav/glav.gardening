@@ -32,7 +32,6 @@ namespace Glav.InformationGathering
 
             services.AddControllers();
             services.AddTransient<ICommunicationProxy, HttpCommunicationProxy>();
-            services.AddTransient<IDaprCommunicationProxy, DaprCommunicationProxy>();
             services.AddTransient<IInformationGatheringOrchestrator, InformationGatheringOrchestrator>();
             services.AddSwaggerGen(c =>
             {

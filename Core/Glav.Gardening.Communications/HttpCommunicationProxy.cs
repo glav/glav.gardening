@@ -35,12 +35,15 @@ namespace Glav.Gardening.Communications
             }
         }
 
-        private static string FormUrl(string daprAppIdOrHost, string serviceMethod, string serviceVersion = "v1.0")
+        public bool IsDaprEnvironment()
         {
-            var port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
-            var isDaprEnabled = !string.IsNullOrEmpty(port);
-            if (isDaprEnabled)
+            return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DAPR_HTTP_PORT"));
+        }
+        private string FormUrl(string daprAppIdOrHost, string serviceMethod, string serviceVersion = "v1.0")
+        {
+            if (IsDaprEnvironment())
             {
+                var port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
                 var daprEndpoint = $"http://localhost:{port}/{serviceVersion}/invoke/{daprAppIdOrHost}/method/{serviceMethod}";
                 return daprEndpoint;
             }
@@ -63,6 +66,20 @@ namespace Glav.Gardening.Communications
             var content = await GetZipBody(result);
             return content;
 
+        }
+
+        public async Task<string> GetExternalContentAsync(string rawUrl)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
+            client.DefaultRequestHeaders.Connection.Add("keep-alive");
+            client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+            var result = await client.GetAsync(rawUrl);
+            var content = await GetZipBody(result);
+            return content;
         }
 
         public async Task<string> GetZipBody(HttpResponseMessage rspMsg)
