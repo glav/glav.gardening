@@ -14,7 +14,6 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
         private readonly ILogger<GardenOrgWebsiteAgent> _logger;
         private int _progress = 0;
         const string _host = "garden.org";
-        const string _queryUrl = "https://"+_host+"/plants/search/text/?q={0}";
         private readonly ICommunicationProxy _commsProtocol;
         public GardenOrgWebsiteAgent(ILogger<GardenOrgWebsiteAgent> logger, ICommunicationProxy commsProtocol)
         {
@@ -27,7 +26,7 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
         public async Task StartAsync(string queryTerm)
         {
             // Get some search results.
-            var content = await _commsProtocol.GetContentAsync(string.Format(_queryUrl, queryTerm));
+            var content = await _commsProtocol.GetContentAsync(_host,  string.Format("plants/search/text/?q={0}", queryTerm));
 
             //Note: use Polly or some retry mechanism here - try..catch for now
             try
@@ -52,7 +51,7 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
                 // 1. Pass search results into next component to make additional queries against GardenOrg to create a GardenOrgPlantItem for each result
                 foreach (var result in searchResults)
                 {
-                    var detailContent = await _commsProtocol.GetContentAsync($"https://{_host}{result.Href}");
+                    var detailContent = await _commsProtocol.GetContentAsync(_host, result.Href);
                     var parsedDetail = new GardenOrgSearchResultDetailsParser().ParseData(detailContent);
                 }
                 _progress = 80;
