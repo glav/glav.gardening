@@ -1,9 +1,5 @@
-﻿using Dapr.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Glav.Gardening.Communications
@@ -14,14 +10,11 @@ namespace Glav.Gardening.Communications
         {
             try
             {
-                //var client = DaprClient.CreateInvokeHttpClient();
-                //var result = await client.PostAsync($"https://{appId}/{serviceMethod}",null);
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
                 client.DefaultRequestHeaders.Connection.Add("keep-alive");
                 client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
                 var result = await client.PostAsync(FormUrl(appId, serviceMethod, serviceVersion),null);
-                //var result = await client.GetAsync(FormUrl(appId, serviceMethod, serviceVersion));
                 return await result.Content.ReadAsStringAsync();
             } catch (Exception ex)
             {
