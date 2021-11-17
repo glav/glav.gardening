@@ -1,4 +1,6 @@
 using Glav.Gardening.Communications;
+using Glav.InformationGathering.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
@@ -9,11 +11,13 @@ namespace Glav.InformationGathering.Domain
     {
         private readonly ICommunicationProxy _commsProxy;
         private readonly ILogger<InformationGatheringOrchestrator> _logger;
+        private readonly LocalFallbackAddress _fallbackConfig;
 
-        public InformationGatheringOrchestrator(ILogger<InformationGatheringOrchestrator> logger, ICommunicationProxy commsProxy)
+        public InformationGatheringOrchestrator(ILogger<InformationGatheringOrchestrator> logger, LocalFallbackAddress fallbackConfig, ICommunicationProxy commsProxy)
         {
             _logger = logger;
             _commsProxy = commsProxy;
+            _fallbackConfig = fallbackConfig;
         }
         public async Task InitiateAsync(string queryTerm)
         {
@@ -23,7 +27,14 @@ namespace Glav.InformationGathering.Domain
             //TODO: Store results.
 
             _logger.LogInformation("Executing gardenorg agent");
-            var result = await _commsProxy.PostContentAsync("gardenorgagent", $"GardenOrgAgent?queryTerm={queryTerm}");
+            _logger.LogInformation("Initiating GardenOrg agent");
+            var gardenAgentAppId = "gardenorgagent";
+            var serviceMethod = $"GardenOrgAgent?queryTerm={queryTerm}";
+            if (!_commsProxy.IsDaprEnvironment())
+            {
+                gardenAgentAppId = _fallbackConfig.GardenOrgAgent;
+            } 
+            var result = await _commsProxy.PostContentAsync(gardenAgentAppId, serviceMethod);
 
             throw new NotImplementedException();
         }
