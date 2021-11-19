@@ -20,8 +20,6 @@ namespace Glav.Gardening.Communications
         {
             try
             {
-                //var client = DaprClient.CreateInvokeHttpClient();
-                //var result = await client.PostAsync($"https://{appId}/{serviceMethod}",null);
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
                 client.DefaultRequestHeaders.Connection.Add("keep-alive");

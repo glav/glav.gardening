@@ -15,13 +15,11 @@ namespace Glav.InformationGathering.Controllers
     public class InformationGatheringController : ControllerBase
     {
         private readonly ILogger<InformationGatheringController> _logger;
-        private readonly IConfiguration _configuration;
         private readonly IInformationGatheringOrchestrator _orchestrator;
 
-        public InformationGatheringController(ILogger<InformationGatheringController> logger, IConfiguration configuration, IInformationGatheringOrchestrator orchestrator)
+        public InformationGatheringController(ILogger<InformationGatheringController> logger, IInformationGatheringOrchestrator orchestrator)
         {
             _logger = logger;
-            _configuration = configuration;
             _orchestrator = orchestrator;
         }
 
@@ -31,16 +29,7 @@ namespace Glav.InformationGathering.Controllers
         {
             _logger.LogInformation("Starting information gathering process");
 
-            var endpoint = _configuration["endpoints:datasanitiser"];
-
-            // Ensure we use the 'DAPR_HTTP_PORT' environment variable here and replace with the port below
-            //var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
-            //Console.WriteLine($"DAPR-PORT: {daprPort}");
-
             await _orchestrator.InitiateAsync(queryTerm);
-            //var result = await _daprProxy.GetContentAsync("gardenorgagent", "GardenOrgAgent");
-            //var daprEndpoint = $"localhost:{daprPort}/v1.0/invoke/sanitiserapp/method/GardenOrgSearchResults";
-            // Kick off the gathering process to retrieve data from all known sources
 
             await Task.FromResult(0);
         }

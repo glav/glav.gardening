@@ -18,6 +18,7 @@ namespace Glav.Gardening.Communications
                 return await result.Content.ReadAsStringAsync();
             } catch (Exception ex)
             {
+                // TODO: Log, return failure
                 throw;
             }
         }
