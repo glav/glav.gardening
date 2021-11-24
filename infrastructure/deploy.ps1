@@ -13,7 +13,7 @@ Param (
   [string] $Environment,
 
   [Int16] $ClusterNodeCount = 1,
-  [Int16] $DaysToLive = 14,
+  [Int16] $DaysToLive = 1,
   [string] $Purpose='personal-use'
   
 )
@@ -121,7 +121,13 @@ try {
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
   $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
   ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
-  
+
+  $topic = "glavgarden-collectionstart"
+  Write-Host "Creating even grid topic '$topic' if not already exists"
+  $gridResult = (az eventgrid topic create --name $topic -l $loc -g $rg)
+  ThrowIfNullResult -result $gridResult -message "Error creating event grid topic"
+
+
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"
   Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$rg'"
