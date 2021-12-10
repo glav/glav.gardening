@@ -124,9 +124,28 @@ try {
 
   $topic = "glavgarden-collectionstart"
   Write-Host "Creating even grid topic '$topic' if not already exists"
-  $gridResult = (az eventgrid topic create --name $topic -l $loc -g $rg)
+  $gridResult = (az eventgrid topic create --name $topic -l $loc -g $rg) | ConvertFrom-Json
   ThrowIfNullResult -result $gridResult -message "Error creating event grid topic"
+  $topicId = $gridResult.id
 
+  $storagename = "gardeningstorage"
+  $queuename = "gardeningeventqueue"
+  Write-Host "Creating storage account '$storagename' if not already exists"
+  $saResult = (az storage account create -n $storagename -g $rg -l $loc --sku Standard_LRS) | ConvertFrom-Json
+  ThrowIfNullResult -result $saResult -message "Error creating storage account [$storagename]"
+  $saId = $saResult.id
+
+  Write-Host "Creating storage queue '$queuename' if not already exists"
+  $qResult = (az storage queue create --name $queuename --account-name $storagename) | ConvertFrom-Json
+  ThrowIfNullResult -result $qResult -message "Error creating storage queue [$queuename]"
+
+  $queueid="$saId/queueservices/default/queues/$queuename"
+  Write-Host "Topic Id: $topicId -->> Queue Id: $queueid"
+
+  $eventSubName = "$topic" + "sub"
+  $eventSubExpiry = ((Get-Date).AddYears(2)).ToString('yyyy-MM-dd')
+  $gridSubResult = (az eventgrid event-subscription create --source-resource-id $topicid --name $eventSubName --endpoint-type storagequeue --endpoint $queueid --expiration-date "$eventSubExpiry") | ConvertFrom-Json
+  ThrowIfNullResult -result $gridSubResult -message "Error creating event grid topic subscription"
 
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"
