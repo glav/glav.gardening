@@ -75,7 +75,20 @@
             "preLaunchTask": "build",
             "script": "${workspaceFolder}/infrastructure/deploy-local.ps1",
             "args": [],
-            "cwd": "${workspaceFolder}/Services",
+            "cwd": "${workspaceFolder}/infrastructure",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "Remove Infra (DEV)",
+            "type": "PowerShell",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "script": "${workspaceFolder}/infrastructure/remove-dev-deploy.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}/infrastructure",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
