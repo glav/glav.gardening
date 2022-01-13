@@ -73,13 +73,8 @@
             "type": "PowerShell",
             "request": "launch",
             "preLaunchTask": "build",
-            "script": "${workspaceFolder}/infrastructure/deploy.ps1",
-            "args": [
-                "-SubscriptionId d6876356-8975-4384-bbec-4be79f7fe030",
-                "-ResourceGroupName gardening",
-                "-Location AustraliaEast",
-                "-Environment dev"
-            ],
+            "script": "${workspaceFolder}/infrastructure/deploy-local.ps1",
+            "args": [],
             "cwd": "${workspaceFolder}/Services",
             "stopAtEntry": false,
             "env": {

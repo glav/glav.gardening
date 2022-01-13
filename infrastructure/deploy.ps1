@@ -100,6 +100,8 @@ try {
   if (-not $context) {
     throw "Execute Connect-AzAccount and try again"
   }
+  Write-Host "Powershell Context:"
+  Write-Host $context
 
   if ($context.Subscription.Id -ne $SubscriptionId) {
     Write-Host "Setting Powershell Subscription/Context to Subscription Id [$SubscriptionId]"
@@ -124,36 +126,46 @@ try {
 
   $aksClusterName = "aksgardening$Environment"
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
-  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  ##Note: This AKS create failed due to nodes being unable to contact K8's API - something to do with the addons
+  #$aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  ##This AKS create works??
+  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
   ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
 
-  $topic = "glavgarden-collectionstart"
-  Write-Host "Creating even grid topic '$topic' if not already exists"
+  $topic = "glavgardenevents"
+  Write-Host "Creating eventgrid topic '$topic' if not already exists"
   $gridResult = (az eventgrid topic create --name $topic -l $Location -g $rg) | ConvertFrom-Json
   ThrowIfNullResult -result $gridResult -message "Error creating event grid topic"
-  $topicId = $gridResult.id
+  $eventGridTopicId = $gridResult.id
+  $eventGridTopicEndpoint = $gridResult.endPoint
+  $eventGridTopicKey = (az eventgrid topic key list -n $topic -g $rg --query "key1" -o tsv)
 
   $storagename = "gardeningsa$Environment"
-  $queuename = "gardeningeventqueue$Environment"
+  $queuename = "gardeningeventq$Environment"
   Write-Host "Creating storage account '$storagename' if not already exists"
-  $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS) | ConvertFrom-Json
+  $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Disabled) | ConvertFrom-Json
   ThrowIfNullResult -result $saResult -message "Error creating storage account [$storagename]"
   $saId = $saResult.id
 
   Write-Host "Getting storage account keys"
-  $saKeys=(az storage account keys list --account1-name $saResult.name) | ConvertFrom-Json
+  $saKeys=(az storage account keys list --account-name $storagename) | ConvertFrom-Json
 
-  Write-Host "Creating storage queue '$queuename' if not already exists"
+  Write-Host "Creating storage queue '$queuename' in storage account '$storagename' if not already exists"
   $qResult = (az storage queue create --name $queuename --account-name $storagename --account-key $saKeys[0].value) | ConvertFrom-Json
   ThrowIfNullResult -result $qResult -message "Error creating storage queue [$queuename]"
 
   $queueid="$saId/queueservices/default/queues/$queuename"
-  Write-Host "Topic Id: $topicId -->> Queue Id: $queueid"
-
+  
   $eventSubName = "$topic" + "sub"
   $eventSubExpiry = ((Get-Date).AddYears(2)).ToString('yyyy-MM-dd')
-  $gridSubResult = (az eventgrid event-subscription create --source-resource-id $topicid --name $eventSubName --endpoint-type storagequeue --endpoint $queueid --expiration-date "$eventSubExpiry") | ConvertFrom-Json
+  $gridSubResult = (az eventgrid event-subscription create --source-resource-id $eventGridTopicId --name $eventSubName --endpoint-type storagequeue --endpoint $queueid --expiration-date "$eventSubExpiry") | ConvertFrom-Json
   ThrowIfNullResult -result $gridSubResult -message "Error creating event grid topic subscription"
+
+  Write-Host "--"
+  Write-Host "Infrsatructure Created."
+  Write-Host "-> EventGrid Topic Id: $eventGridTopicId"
+  Write-Host "-> EventGrid Endpoint: $eventGridTopicEndpoint"
+  Write-Host "-> Storage Queue Id: $queueid"
 
   Write-Host "*******"
   Write-Host "NOTE: To get credentials of the cluster for using kubectl, use the following line:"

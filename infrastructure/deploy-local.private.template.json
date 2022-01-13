@@ -1,0 +1,9 @@
+{
+  "SubscriptionId": "<target subscription id>",
+  "ResourceGroupName": "gardening",
+  "Environment": "dev",
+  "Location": "Australia East",
+  "ClusterNodeCount": "1",
+  "DaysToLive": "1",
+  "Purpose": "personal-use"
+}
