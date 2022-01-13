@@ -67,6 +67,24 @@
             },
             "preLaunchTask": "gardenorgagent-daprd-up",
             "postDebugTask": "gardenorgagent-daprd-down"
+        },
+        {
+            "name": "Deploy Infra (DEV)",
+            "type": "PowerShell",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "script": "${workspaceFolder}/infrastructure/deploy.ps1",
+            "args": [
+                "-SubscriptionId d6876356-8975-4384-bbec-4be79f7fe030",
+                "-ResourceGroupName gardening",
+                "-Location AustraliaEast",
+                "-Environment dev"
+            ],
+            "cwd": "${workspaceFolder}/Services",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         }
     ],
     "compounds": [

@@ -102,8 +102,13 @@ try {
   }
 
   if ($context.Subscription.Id -ne $SubscriptionId) {
-    Set-AzContext -SubscriptionId $SubscriptionId
+    Write-Host "Setting Powershell Subscription/Context to Subscription Id [$SubscriptionId]"
+    $ctxtResult = Set-AzContext -SubscriptionId $SubscriptionId
+    ThrowIfNullResult -result $ctxtResult -message "Error setting powershell subscription/context to Subscription Id [$SubscriptionId]"
   }
+  
+  Write-Host "Setting AZ CLI Subscription/Context to Subscription Id [$SubscriptionId]"
+  az account set --subscription $SubscriptionId
 
   ################################################################################
   ## ARM deployment
@@ -124,19 +129,22 @@ try {
 
   $topic = "glavgarden-collectionstart"
   Write-Host "Creating even grid topic '$topic' if not already exists"
-  $gridResult = (az eventgrid topic create --name $topic -l $loc -g $rg) | ConvertFrom-Json
+  $gridResult = (az eventgrid topic create --name $topic -l $Location -g $rg) | ConvertFrom-Json
   ThrowIfNullResult -result $gridResult -message "Error creating event grid topic"
   $topicId = $gridResult.id
 
-  $storagename = "gardeningstorage"
-  $queuename = "gardeningeventqueue"
+  $storagename = "gardeningsa$Environment"
+  $queuename = "gardeningeventqueue$Environment"
   Write-Host "Creating storage account '$storagename' if not already exists"
-  $saResult = (az storage account create -n $storagename -g $rg -l $loc --sku Standard_LRS) | ConvertFrom-Json
+  $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS) | ConvertFrom-Json
   ThrowIfNullResult -result $saResult -message "Error creating storage account [$storagename]"
   $saId = $saResult.id
 
+  Write-Host "Getting storage account keys"
+  $saKeys=(az storage account keys list --account1-name $saResult.name) | ConvertFrom-Json
+
   Write-Host "Creating storage queue '$queuename' if not already exists"
-  $qResult = (az storage queue create --name $queuename --account-name $storagename) | ConvertFrom-Json
+  $qResult = (az storage queue create --name $queuename --account-name $storagename --account-key $saKeys[0].value) | ConvertFrom-Json
   ThrowIfNullResult -result $qResult -message "Error creating storage queue [$queuename]"
 
   $queueid="$saId/queueservices/default/queues/$queuename"
