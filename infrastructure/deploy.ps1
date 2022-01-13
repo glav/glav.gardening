@@ -142,7 +142,13 @@ try {
   $storagename = "gardeningsa$Environment"
   $queuename = "gardeningeventq$Environment"
   Write-Host "Creating storage account '$storagename' if not already exists"
-  $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Disabled) | ConvertFrom-Json
+  
+  #Note: The commented line below with '--public-network-access Disabled' causes problems when accessing the queue and specifically getting the keys from the next deployment step - get a 403 client forbidden, even in Portal
+  #$saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Disabled --allow-blob-public-access false  --allow-shared-key-access true) | ConvertFrom-Json
+  
+  #Note: The commend below simply creates the storage acct with '--public-network-access Enabled' - should revisit that once keys are accessed and queues created, maybe reset this value to false and check if 
+  #      can access storage queues without issues
+  $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Enabled  --allow-blob-public-access false  --allow-shared-key-access true) | ConvertFrom-Json
   ThrowIfNullResult -result $saResult -message "Error creating storage account [$storagename]"
   $saId = $saResult.id
 
