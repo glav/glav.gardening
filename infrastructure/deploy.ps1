@@ -3,15 +3,14 @@ Param (
   [Parameter(Mandatory = $true)] 
   [string] $SubscriptionId,
 
-  [Parameter(Mandatory = $true)]
-  [string] $ResourceGroupName="gardening" ,
-
-  [string] $Location = "Australia East",
-  
   [Parameter(Mandatory = $true)] 
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment,
 
+  [string] $ResourceGroupName="gardening" ,
+
+  [string] $Location = "Australia East",
+  
   [Int16] $ClusterNodeCount = 1,
   [Int16] $DaysToLive = 1,
   [string] $Purpose='personal-use'
