@@ -2,6 +2,9 @@ name: .NET CI Build
 
 on:
   pull_request:
+    paths-ignore:
+      - 'infrastructure/**'
+      - 'Design/**'
 
 jobs:
   build:
