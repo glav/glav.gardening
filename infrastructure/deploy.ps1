@@ -7,13 +7,13 @@ Param (
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment,
 
-  [string] $ResourceGroupName="gardening" ,
+  [string] $ResourceGroupName = "gardening" ,
 
   [string] $Location = "Australia East",
   
   [Int16] $ClusterNodeCount = 1,
   [Int16] $DaysToLive = 1,
-  [string] $Purpose='personal-use'
+  [string] $Purpose = 'personal-use'
   
 )
 
@@ -50,10 +50,9 @@ function Get-OrSetKeyVaultGeneratedSecret {
   return $password
 }
 
-function Ensure-KeyVaultSecretExists([string] $secretName, [string]$defaultValue)
-{
+function Ensure-KeyVaultSecretExists([string] $secretName, [string]$defaultValue) {
   Write-Host "Ensuring a secret entry exists in keyvault [$KeyVaultInstanceName] for $secretName..."
-    Get-OrSetKeyVaultGeneratedSecret -keyVaultName $KeyVaultInstanceName -secretName "$secretName" `
+  Get-OrSetKeyVaultGeneratedSecret -keyVaultName $KeyVaultInstanceName -secretName "$secretName" `
     -generator { return "$defaultValue" } `
   | Out-Null
   
@@ -64,16 +63,13 @@ function Ensure-KeyVaultSecretExists([string] $secretName, [string]$defaultValue
     
 }
 
-function ThrowIfNullResult($result, [string] $message)
-{
-  if ($null -eq $message -or $message -eq "")
-  {
+function ThrowIfNullResult($result, [string] $message) {
+  if ($null -eq $message -or $message -eq "") {
     $message = "An error occurred performing a deployment or executing an action"
   }
-  if ($null -eq $result)
-  {
-     Write-Host $message
-     throw $message
+  if ($null -eq $result) {
+    Write-Host $message
+    throw $message
   }
 
 }
@@ -127,9 +123,15 @@ try {
   Write-Host " .. Ensuring AKS Cluster [$aksClusterName] is created"
   ##Note: This AKS create failed due to nodes being unable to contact K8's API - something to do with the addons
   #$aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --enable-addons monitoring,http_application_routing --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+  
   ##This AKS create works??
-  $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
-  ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
+  Write-Host "Checking existence of AKS Cluster: $aksClusterName"
+  $aksExistsResult = az aks show --name $aksClusterName -g $rg
+  if ($null -eq $aksExistsResult) {
+    Write-Host "AKS Cluster: $aksClusterName does not exist, creating..."
+    $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
+    ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
+  }
 
   $topic = "glavgardenevents"
   Write-Host "Creating eventgrid topic '$topic' if not already exists"
@@ -153,13 +155,13 @@ try {
   $saId = $saResult.id
 
   Write-Host "Getting storage account keys"
-  $saKeys=(az storage account keys list --account-name $storagename) | ConvertFrom-Json
+  $saKeys = (az storage account keys list --account-name $storagename) | ConvertFrom-Json
 
   Write-Host "Creating storage queue '$queuename' in storage account '$storagename' if not already exists"
   $qResult = (az storage queue create --name $queuename --account-name $storagename --account-key $saKeys[0].value) | ConvertFrom-Json
   ThrowIfNullResult -result $qResult -message "Error creating storage queue [$queuename]"
 
-  $queueid="$saId/queueservices/default/queues/$queuename"
+  $queueid = "$saId/queueservices/default/queues/$queuename"
   
   $eventSubName = "$topic" + "sub"
   $eventSubExpiry = ((Get-Date).AddYears(2)).ToString('yyyy-MM-dd')
@@ -177,9 +179,9 @@ try {
   Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$rg'"
   Write-Host "*******"
   
-# $bidsMarketApimTemplatePath = Join-Path $PSScriptRoot "api-management-template-bids-market-v2.json"
-# $functionsBicepTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.bicep"
-# $functionsArmTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.json"
+  # $bidsMarketApimTemplatePath = Join-Path $PSScriptRoot "api-management-template-bids-market-v2.json"
+  # $functionsBicepTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.bicep"
+  # $functionsArmTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.json"
 
   ## Keyvault: MarketDbConnectionString
   #Ensure-KeyVaultSecretExists -secretName "MarketDbConnectionString" -defaultValue "ENTER-MARKETDB-CONNECTION-STRING"
