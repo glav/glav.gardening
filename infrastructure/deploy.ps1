@@ -177,9 +177,9 @@ try {
   Write-Host "      az aks get-credentials -n '$aksClusterName' -g '$rg'"
   Write-Host "*******"
   
-#  $bidsMarketApimTemplatePath = Join-Path $PSScriptRoot "api-management-template-bids-market-v2.json"
-#  $functionsBicepTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.bicep"
-#  $functionsArmTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.json"
+# $bidsMarketApimTemplatePath = Join-Path $PSScriptRoot "api-management-template-bids-market-v2.json"
+# $functionsBicepTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.bicep"
+# $functionsArmTemplatePath = Join-Path $PSScriptRoot "5ms-functions-bids-market-v2-template.json"
 
   ## Keyvault: MarketDbConnectionString
   #Ensure-KeyVaultSecretExists -secretName "MarketDbConnectionString" -defaultValue "ENTER-MARKETDB-CONNECTION-STRING"
