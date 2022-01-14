@@ -15,7 +15,42 @@ namespace Glav.Gardening.Communications
         {
             _logger = logger;
         }
-        public async Task<string> GetContentAsync(string queryUrl)
+
+        public async Task<string> PostContentAsync(string daprAppIdOrHost, string serviceMethod, HttpContent content = null, string serviceVersion = "v1.0")
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+                client.DefaultRequestHeaders.Connection.Add("keep-alive");
+                client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+                var result = await client.PostAsync(FormUrl(daprAppIdOrHost, serviceMethod, serviceVersion), content);
+                return await result.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool IsDaprEnvironment()
+        {
+            return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DAPR_HTTP_PORT"));
+        }
+        private string FormUrl(string daprAppIdOrHost, string serviceMethod, string serviceVersion = "v1.0")
+        {
+            if (IsDaprEnvironment())
+            {
+                var port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
+                var daprEndpoint = $"http://localhost:{port}/{serviceVersion}/invoke/{daprAppIdOrHost}/method/{serviceMethod}";
+                return daprEndpoint;
+            }
+
+            return $"https://{daprAppIdOrHost}/{serviceMethod}"; // typically for local dev where daprIdOrHost might be http://localhost:5001 for example
+
+        }
+
+        public async Task<string> GetContentAsync(string daprAppIdOrHost, string serviceMethod, string serviceVersion = "v1.0")
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
@@ -24,10 +59,25 @@ namespace Glav.Gardening.Communications
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
             client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
-            var result = await client.GetAsync(queryUrl);
+            var url = FormUrl(daprAppIdOrHost, serviceMethod, serviceVersion);
+            var result = await client.GetAsync(url);
             var content = await GetZipBody(result);
             return content;
 
+        }
+
+        public async Task<string> GetExternalContentAsync(string rawUrl)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
+            client.DefaultRequestHeaders.Connection.Add("keep-alive");
+            client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+            var result = await client.GetAsync(rawUrl);
+            var content = await GetZipBody(result);
+            return content;
         }
 
         public async Task<string> GetZipBody(HttpResponseMessage rspMsg)

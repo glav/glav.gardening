@@ -7,6 +7,6 @@ services:
     image: queryplant
     build:
       context: .
-      dockerfile: services/query-plant/Dockerfile
+      dockerfile: Services/Glav.QueryPlant.Service/Dockerfile
     ports:
       - 5000

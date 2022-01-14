@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Glav.Gardening.Communications;
+using Glav.InformationGathering.Configuration;
+using Glav.InformationGathering.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,10 +32,20 @@ namespace Glav.InformationGathering
         {
 
             services.AddControllers();
+            services.AddTransient<ICommunicationProxy, HttpCommunicationProxy>();
+            services.AddTransient<IInformationGatheringOrchestrator, InformationGatheringOrchestrator>();
+            services.AddSingleton<LocalFallbackAddress>(MapLocalAddressFromConfig());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Information Gathering Controller", Version = "v1" });
             });
+        }
+
+        private LocalFallbackAddress MapLocalAddressFromConfig()
+        {
+            var sanitiserLocalhost = Configuration["endpoints:datasanitiser"];
+            var gardenOrgLocalhost = Configuration["endpoints:gardenOrgAgent"];
+            return new LocalFallbackAddress(sanitiserLocalhost, gardenOrgLocalhost);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

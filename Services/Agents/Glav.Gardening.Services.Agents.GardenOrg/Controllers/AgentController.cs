@@ -21,7 +21,7 @@ namespace Glav.Gardening.Services.Agents.Controllers
         [HttpPost("/GardenOrgAgent")]
         public async Task InitiateAsync([FromQuery] string queryTerm)
         {
-            _logger.LogInformation("Initiating GardenOrgWebsiteAgent");
+            _logger.LogInformation("Initiating GardenOrgWebsiteAgent with queryTerm=[{0}]",queryTerm);
             await _agent.StartAsync(queryTerm);
         }
     }

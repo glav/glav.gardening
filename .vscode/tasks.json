@@ -1,0 +1,71 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        // Info gathering
+        {
+            "label": "infogathering-daprd-up",
+            "appId": "infogathering",
+            "appPort": 5003,
+            "type": "daprd",
+            "httpPort": 3501,
+            "metricsPort": 9091,
+            "grpcPort": 50002,
+            "appSsl": true
+        },
+        {
+            "appId": "infogathering",
+            "label": "infogathering-daprd-down",
+            "type": "daprd-down"
+        },
+        // Gardenorg Agent
+        {
+            "label": "gardenorgagent-daprd-up",
+            "appId": "gardenorgagent",
+            "appPort": 5005,
+            "type": "daprd",
+            "httpPort": 3502,
+            "metricsPort": 9092,
+            "grpcPort": 50003,
+            "appSsl": true
+        },
+        {
+            "appId": "gardenorgagent",
+            "label": "gardenorgagent-daprd-down",
+            "type": "daprd-down"
+        }
+    ]
+}

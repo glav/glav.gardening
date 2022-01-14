@@ -349,5 +349,7 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# VSCode
-.vscode/
+# Local settings file for Azure deployment
+infrastructure/deploy-local.private.json
+
+

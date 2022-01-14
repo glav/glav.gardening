@@ -33,7 +33,6 @@ namespace Glav.Gardening.Services.Agents
             services.AddControllers();
             services.AddTransient<GardenOrgWebsiteAgent>();
             services.AddTransient<ICommunicationProxy,HttpCommunicationProxy>();
-            services.AddTransient<IDaprCommunicationProxy, DaprCommunicationProxy>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Glav.Gardening.Services.Agents", Version = "v1" });
