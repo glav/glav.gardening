@@ -5,5 +5,10 @@
   "Location": "Australia East",
   "ClusterNodeCount": "1",
   "DaysToLive": "1",
-  "Purpose": "personal-use"
+  "Purpose": "personal-use",
+  "EventGridTopicName": "glavgardenevents",
+  "StorageAccountName":"gardeningsa",
+  "AksClusterName":"aksgardening",
+  "AksNodeVmSize": "Standard_DS2_v2",
+  "AksNodeCount": 1
 }
