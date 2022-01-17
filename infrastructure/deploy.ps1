@@ -15,8 +15,8 @@ Param (
   [Int16] $DaysToLive = 1,
   [string] $Purpose = 'personal-use',
   [string] $EventGridTopicName = 'glavgardenevents',
-  [string] $StorageAccountName = 'gardeningsadev',
-  [string] $AksClusterName = 'aksgardeningdev',
+  [string] $StorageAccountName = 'gardeningsa',
+  [string] $AksClusterName = 'aksgardening',
   [string] $AksNodeVmSize = 'Standard_DS2_v2',
   [int] $AksNodeCount = 1
   
