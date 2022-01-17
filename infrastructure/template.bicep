@@ -126,10 +126,6 @@ resource AksClusterNodepoolResource 'Microsoft.ContainerService/managedClusters/
 resource StorageAccountBlobResource 'Microsoft.Storage/storageAccounts/blobServices@2021-06-01' = {
   parent: StorageAccountResource
   name: 'default'
-  sku: {
-    name: 'Standard_LRS'
-    tier: 'Standard'
-  }
   properties: {
     cors: {
       corsRules: []
