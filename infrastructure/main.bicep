@@ -168,6 +168,9 @@ resource EventGridSubscription 'Microsoft.EventGrid/eventSubscriptions@2021-12-0
       isSubjectCaseSensitive: false
     }
   }
+  dependsOn: [
+    StorageAccountEventQueue
+  ]
 }
 
 output eventGridTopicId string = EventGridTopicResource.id
