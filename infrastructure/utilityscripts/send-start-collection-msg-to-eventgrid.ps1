@@ -1,6 +1,6 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 Param (
-  [string] $EventGridTopicName="glavgardenevents"
+  [string] $EventGridTopicName="glavgardeneventsdev"
 )
 
 Write-Host "Attempting to get details for EventGrid topic: $EventGridTopicName"

@@ -125,55 +125,13 @@ try {
   az tag update --operation replace --resource-id $rgResult.id --tags "expiresOn=$expiry" "Environment=$Environment" "Usage=$Purpose"
 
   Write-Host "Deploying infrastructure"
-  # $aksExistsResult = az aks show --name $aksClusterName -g $rg
-  # if ($null -eq $aksExistsResult) {
-  #   Write-Host "AKS Cluster: $aksClusterName does not exist, creating..."
-  #   $aksResult = (az aks create --resource-group $rg --name $aksClusterName --node-count $ClusterNodeCount --generate-ssh-keys --enable-aad --enable-azure-rbac  --enable-managed-identity --load-balancer-managed-outbound-ip-count 1) | ConvertFrom-Json
-  #   ThrowIfNullResult -result $aksResult -message "Error creating/updating AKS Cluster"
-  # }
 
-  # $topic = "glavgardenevents"
-  # Write-Host "Creating eventgrid topic '$topic' if not already exists"
-  # $gridResult = (az eventgrid topic create --name $topic -l $Location -g $rg) | ConvertFrom-Json
-  # ThrowIfNullResult -result $gridResult -message "Error creating event grid topic"
-  # $eventGridTopicId = $gridResult.id
-  # $eventGridTopicEndpoint = $gridResult.endPoint
-  # $eventGridTopicKey = (az eventgrid topic key list -n $topic -g $rg --query "key1" -o tsv)
-
-  # $storagename = "gardeningsa$Environment"
-  # $queuename = "gardeningeventq$Environment"
-  # Write-Host "Creating storage account '$storagename' if not already exists"
-  
-  # #Note: The commented line below with '--public-network-access Disabled' causes problems when accessing the queue and specifically getting the keys from the next deployment step - get a 403 client forbidden, even in Portal
-  # #$saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Disabled --allow-blob-public-access false  --allow-shared-key-access true) | ConvertFrom-Json
-  
-  # #Note: The commend below simply creates the storage acct with '--public-network-access Enabled' - should revisit that once keys are accessed and queues created, maybe reset this value to false and check if 
-  # #      can access storage queues without issues
-  # $saResult = (az storage account create -n $storagename -g $rg -l $Location --sku Standard_LRS  --min-tls-version TLS1_2 --public-network-access Enabled  --allow-blob-public-access false  --allow-shared-key-access true) | ConvertFrom-Json
-  # ThrowIfNullResult -result $saResult -message "Error creating storage account [$storagename]"
-  # $saId = $saResult.id
-
-  
-  ###################### have to redo these??? once bicep is done
-  # Write-Host "Getting storage account keys"
-  # $saKeys = (az storage account keys list --account-name $storagename) | ConvertFrom-Json
-
-  # Write-Host "Creating storage queue '$queuename' in storage account '$storagename' if not already exists"
-  # $qResult = (az storage queue create --name $queuename --account-name $storagename --account-key $saKeys[0].value) | ConvertFrom-Json
-  # ThrowIfNullResult -result $qResult -message "Error creating storage queue [$queuename]"
-
-  # $queueid = "$saId/queueservices/default/queues/$queuename"
-  
-  # $eventSubName = "$topic" + "sub"
-  # $eventSubExpiry = ((Get-Date).AddYears(2)).ToString('yyyy-MM-dd')
-  # $gridSubResult = (az eventgrid event-subscription create --source-resource-id $eventGridTopicId --name $eventSubName --endpoint-type storagequeue --endpoint $queueid --expiration-date "$eventSubExpiry") | ConvertFrom-Json
-  # ThrowIfNullResult -result $gridSubResult -message "Error creating event grid topic subscription"
-
-  $bicepTemplatePath = Join-Path $PSScriptRoot "template.bicep"
-  $armTemplatePath = Join-Path $PSScriptRoot "template.json"
+  $bicepTemplatePath = Join-Path $PSScriptRoot "main.bicep"
+  $armTemplatePath = Join-Path $PSScriptRoot "main.json"
   Write-Host "Compiling functions infrastructure bicep template to: " $armTemplatePath
   az bicep build -f $bicepTemplatePath 
 
+  # Package our parameters
   $armParams = @{
     "environment"        = $Environment;
     "eventGridTopicName" = $EventGridTopicName
@@ -187,10 +145,13 @@ try {
   Write-Host "Beginning infrastructure ARM deployment"
   $armDeployResult = New-AzResourceGroupDeployment `
     -Name "glavgarden-$Environment" `
-    -ResourceGroupName $ResourceGroupName `
+    -ResourceGroupName $rg `
     -TemplateFile $armTemplatePath `
     -TemplateParameterObject $armParams `
     -ErrorAction Continue
+
+    # Cleanup
+  Remove-Item $armTemplatePath -ErrorAction Ignore
 
   if (-not $armDeployResult -or $armDeployResult.ProvisioningState -ne "Succeeded") {
     Write-Host (ConvertTo-Json $armDeployResult)
@@ -199,9 +160,13 @@ try {
     throw "An error occurred deploying resources with ARM and we're not sure why. There's probably more error info in the output above."
   }
   
+  $eventGridTopicId = $armDeployResult.Outputs["eventGridTopicId"].Value
+  $eventGridTopicEndpoint = $armDeployResult.Outputs["eventGridEndpoint"].Value
+  $queueid = $armDeployResult.Outputs["storageQueueId"].Value
+
   # Write-Host "Function deployment complete"
   Write-Host "--"
-  Write-Host "Infrsatructure Created."
+  Write-Host "Infrastructure Created."
   Write-Host "-> EventGrid Topic Id: $eventGridTopicId"
   Write-Host "-> EventGrid Endpoint: $eventGridTopicEndpoint"
   Write-Host "-> Storage Queue Id: $queueid"
