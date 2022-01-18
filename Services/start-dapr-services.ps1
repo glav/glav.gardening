@@ -26,4 +26,11 @@ Start-Job -Name "dapr-gardenorgagent" -ScriptBlock {
 	dapr run --app-id gardenorgagent --app-port 5005 --app-ssl --dapr-http-port 3502 dotnet run -- --urls='https://localhost:5005/;http://localhost:5004/'
 }# > $null
 
+"Starting Data storage service on port 5006, DAPR sidecar port: 3503"
+Set-Location $gardenOrgAgentDir
+Start-Job -Name "dapr-gardenorgagent" -ScriptBlock {
+	dapr run --app-id datastorage --app-port 5007 --app-ssl --dapr-http-port 3503 dotnet run -- --urls='https://localhost:5007/;http://localhost:5006/'
+}# > $null
+
+
 Set-Location $currentDir

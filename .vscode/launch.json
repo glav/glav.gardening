@@ -69,6 +69,27 @@
             "postDebugTask": "gardenorgagent-daprd-down"
         },
         {
+            "name": "Dapr - Data storage .NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/Services/Glav.DataStorage.Service/bin/debug/net6.0/Glav.DataStorage.Service.dll",
+            "cwd": "${workspaceFolder}/Services/Glav.DataStorage.Service",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DAPR_HTTP_PORT": "3503"
+            },
+            "args": [
+                    "--urls=https://localhost:5007/;http://localhost:5006/"
+            ],
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "preLaunchTask": "infogathering-daprd-up",
+            "postDebugTask": "infogathering-daprd-down"
+        },
+        {
             "name": "Deploy Infra (DEV)",
             "type": "PowerShell",
             "request": "launch",

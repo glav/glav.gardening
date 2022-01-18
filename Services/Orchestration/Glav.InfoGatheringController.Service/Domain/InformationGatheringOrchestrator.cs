@@ -36,7 +36,7 @@ namespace Glav.InformationGathering.Domain
             } 
             var result = await _commsProxy.PostContentAsync(gardenAgentAppId, serviceMethod);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("Yeah - orchestrator not finished - sorry");
         }
     }
 }
