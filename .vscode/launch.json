@@ -86,8 +86,8 @@
                 "action": "openExternally",
                 "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
             },
-            "preLaunchTask": "infogathering-daprd-up",
-            "postDebugTask": "infogathering-daprd-down"
+            "preLaunchTask": "datastorage-daprd-up",
+            "postDebugTask": "datastorage-daprd-down"
         },
         {
             "name": "Deploy Infra (DEV)",

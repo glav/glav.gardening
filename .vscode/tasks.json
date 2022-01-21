@@ -66,6 +66,22 @@
             "appId": "gardenorgagent",
             "label": "gardenorgagent-daprd-down",
             "type": "daprd-down"
+        },
+        // Data storage Agent
+        {
+            "label": "datastorage-daprd-up",
+            "appId": "datastorage",
+            "appPort": 5007,
+            "type": "daprd",
+            "httpPort": 3503,
+            "metricsPort": 9092,
+            "grpcPort": 50003,
+            "appSsl": true
+        },
+        {
+            "appId": "datastorage",
+            "label": "datastorage-daprd-down",
+            "type": "daprd-down"
         }
     ]
 }
