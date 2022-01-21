@@ -11,6 +11,7 @@ namespace Glav.Gardening.Communications
     {
         private readonly ILogger<HttpCommunicationProxy> _logger;
 
+
         public HttpCommunicationProxy(ILogger<HttpCommunicationProxy> logger)
         {
             _logger = logger;
@@ -37,16 +38,18 @@ namespace Glav.Gardening.Communications
         {
             return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DAPR_HTTP_PORT"));
         }
-        private string FormUrl(string daprAppIdOrHost, string serviceMethod, string serviceVersion = "v1.0")
+        private string FormUrl(string daprAppId, string serviceMethod, string serviceVersion = "v1.0")
         {
+            var appSvc = AppServices.ById(daprAppId);
+
             if (IsDaprEnvironment())
             {
                 var port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
-                var daprEndpoint = $"http://localhost:{port}/{serviceVersion}/invoke/{daprAppIdOrHost}/method/{serviceMethod}";
+                var daprEndpoint = $"http://localhost:{port}/{serviceVersion}/invoke/{appSvc.appId}/method/{serviceMethod}";
                 return daprEndpoint;
             }
 
-            return $"https://{daprAppIdOrHost}/{serviceMethod}"; // typically for local dev where daprIdOrHost might be http://localhost:5001 for example
+            return $"https://{appSvc.localFallbackAddress}/{serviceMethod}"; // typically for local dev where daprIdOrHost might be http://localhost:5001 for example
 
         }
 

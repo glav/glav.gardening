@@ -2,9 +2,11 @@ using Glav.Gardening.Communications;
 using Glav.Gardening.Services.Agents.GardenOrg.Parsers;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Glav.InformationGathering.Domain.GardenOrg.Domain
@@ -25,6 +27,7 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
 
         public async Task StartAsync(string queryTerm)
         {
+            _logger.LogInformation("Starting async collection via GardenOrgAgent");
             // Get some search results.
             var content = await _commsProxy.GetExternalContentAsync($"https://{_host}/plants/search/text/?q={queryTerm}");
 
@@ -35,9 +38,11 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
 
                 if (string.IsNullOrWhiteSpace(content))
                 {
+                    _logger.LogWarning("no content to process from GardenOrgAgent collection");
                     _progress = 100;
                     return;
                 }
+                _logger.LogInformation("Parsing GardenOrgAgent search results");
                 var searchResultParser = new GardenOrgSearchResultsParser();
                 var searchResults = searchResultParser.ParseData(content);
                 if (searchResults?.Count == 0 || searchResults.All(r => string.IsNullOrEmpty(r.Href)))
@@ -49,16 +54,23 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
                 _progress = 40;
 
                 // 1. Pass search results into next component to make additional queries against GardenOrg to create a GardenOrgPlantItem for each result
+                var resultList = new List<GardenOrgSearchResultDetail>(searchResults.Count);
                 foreach (var result in searchResults)
                 {
+                    _logger.LogInformation($"Collecting detailed info from search result [{result.ResultText}] via GardenOrgAgent");
                     var detailContent = await _commsProxy.GetExternalContentAsync($"https://{_host}{result.Href}");
                     var parsedDetail = new GardenOrgSearchResultDetailsParser().ParseData(detailContent);
+                    resultList.Add(parsedDetail);
                     // TODO: Add to list of results to return
                 }
                 _progress = 80;
 
                 // 2. Store results into storage
                 _progress = 100;
+                
+                _logger.LogInformation($"Persisting {resultList.Count} detailed results via GardenOrgAgent to storage");
+                var jsonBody = JsonSerializer.Serialize<List<GardenOrgSearchResultDetail>>(resultList);
+                await _commsProxy.PostContentAsync(ServiceAppId.DataStorage,"persist",new StringContent(jsonBody));
 
             }
             catch (Exception ex)

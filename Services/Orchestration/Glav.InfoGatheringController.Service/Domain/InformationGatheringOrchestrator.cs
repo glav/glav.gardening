@@ -30,10 +30,6 @@ namespace Glav.InformationGathering.Domain
             _logger.LogInformation("Initiating GardenOrg agent");
             var gardenAgentAppId = "gardenorgagent";
             var serviceMethod = $"GardenOrgAgent?queryTerm={queryTerm}";
-            if (!_commsProxy.IsDaprEnvironment())
-            {
-                gardenAgentAppId = _fallbackConfig.GardenOrgAgent;
-            } 
             var result = await _commsProxy.PostContentAsync(gardenAgentAppId, serviceMethod);
 
             throw new NotImplementedException("Yeah - orchestrator not finished - sorry");
