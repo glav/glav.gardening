@@ -1,14 +1,13 @@
 {
   "SubscriptionId": "<target subscription id>",
-  "ResourceGroupName": "gardening",
-  "Environment": "dev",
-  "Location": "Australia East",
-  "ClusterNodeCount": "1",
-  "DaysToLive": "1",
-  "Purpose": "personal-use",
-  "EventGridTopicName": "glavgardenevents",
-  "StorageAccountName":"gardeningsa",
-  "AksClusterName":"aksgardening",
-  "AksNodeVmSize": "Standard_DS2_v2",
+  "ResourceGroupName": "<RESOURCE-GROUP-NAME>",
+  "Environment": "<DEV-UAT-OTHER>",
+  "Location": "<LOCATION>",
+  "DaysToLive": "<MINIMUM-1-APPLIES-EXPIRESON-TAG>",
+  "Purpose": "<ANY-TAG-DESCRIPTION>",
+  "EventGridTopicName": "<EVENTGRID-TOPIC-NAME>",
+  "StorageAccountName":"<STORAGE-ACCT-NAME>",
+  "AksClusterName":"<AKS-CLUSTER-NAME>",
+  "AksNodeVmSize": "<AZURE-VM-SIZE>",
   "AksNodeCount": 1
 }

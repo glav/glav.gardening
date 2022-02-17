@@ -11,7 +11,6 @@ Param (
 
   [string] $Location = "Australia East",
   
-  [Int16] $ClusterNodeCount = 1,
   [Int16] $DaysToLive = 1,
   [string] $Purpose = 'personal-use',
   [string] $EventGridTopicName = 'glavgardenevents',
