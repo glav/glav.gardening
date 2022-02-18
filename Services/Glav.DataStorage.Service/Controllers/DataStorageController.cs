@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Glav.Gardening.Communications;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,21 +11,20 @@ namespace Glav.DataStorage.Service.Controllers;
 public class DataStorageController : ControllerBase
 {
     private readonly ILogger<DataStorageController> _logger;
+    private readonly ICommunicationProxy _commsProxy;
 
-    public DataStorageController(ILogger<DataStorageController> logger)
+    public DataStorageController(ILogger<DataStorageController> logger, ICommunicationProxy commsProxy)
     {
         _logger = logger;
+        _commsProxy = commsProxy;
     }
 
     [HttpPost("/persist")]
-    public async Task<object> Persist()
+    public async Task Persist(object data)
     {
         _logger.LogInformation("DataStorage: Persisting data to storage");
-        return new
-        {
-            Status = "ok",
-            Date = DateTime.Now
-        };
+        var storeResult = await _commsProxy.StoreState("test", data);
+        var testData = await _commsProxy.GetState("test");
     }
 }
 

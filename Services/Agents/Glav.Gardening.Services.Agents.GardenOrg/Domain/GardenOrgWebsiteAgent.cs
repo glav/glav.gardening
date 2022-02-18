@@ -61,16 +61,15 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
                     var detailContent = await _commsProxy.GetExternalContentAsync($"https://{_host}{result.Href}");
                     var parsedDetail = new GardenOrgSearchResultDetailsParser().ParseData(detailContent);
                     resultList.Add(parsedDetail);
-                    // TODO: Add to list of results to return
                 }
                 _progress = 80;
 
                 // 2. Store results into storage
-                _progress = 100;
-                
                 _logger.LogInformation($"Persisting {resultList.Count} detailed results via GardenOrgAgent to storage");
                 var jsonBody = JsonSerializer.Serialize<List<GardenOrgSearchResultDetail>>(resultList);
                 await _commsProxy.PostContentAsync(ServiceAppId.DataStorage,"persist",new StringContent(jsonBody));
+
+                _progress = 100;
 
             }
             catch (Exception ex)

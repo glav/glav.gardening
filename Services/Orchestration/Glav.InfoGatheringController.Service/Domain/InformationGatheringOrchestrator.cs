@@ -3,6 +3,7 @@ using Glav.InformationGathering.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Glav.InformationGathering.Domain

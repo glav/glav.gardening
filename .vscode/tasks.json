@@ -74,8 +74,8 @@
             "appPort": 5007,
             "type": "daprd",
             "httpPort": 3503,
-            "metricsPort": 9092,
-            "grpcPort": 50003,
+            "metricsPort": 9093,
+            "grpcPort": 50004,
             "appSsl": true
         },
         {

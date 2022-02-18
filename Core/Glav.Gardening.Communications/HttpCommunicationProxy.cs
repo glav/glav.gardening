@@ -10,7 +10,7 @@ namespace Glav.Gardening.Communications
     public class HttpCommunicationProxy : ICommunicationProxy
     {
         private readonly ILogger<HttpCommunicationProxy> _logger;
-
+        private const string USER_AGENT = "query/agent";
 
         public HttpCommunicationProxy(ILogger<HttpCommunicationProxy> logger)
         {
@@ -24,7 +24,7 @@ namespace Glav.Gardening.Communications
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
                 client.DefaultRequestHeaders.Connection.Add("keep-alive");
-                client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+                client.DefaultRequestHeaders.Add("User-Agent", USER_AGENT);
                 var result = await client.PostAsync(FormUrl(daprAppIdOrHost, serviceMethod, serviceVersion), content);
                 return await result.Content.ReadAsStringAsync();
             }
@@ -45,6 +45,10 @@ namespace Glav.Gardening.Communications
             if (IsDaprEnvironment())
             {
                 var port = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");
+                if (appSvc.appId == ServiceAppId.State || appSvc.appId == ServiceAppId.PubSub)
+                {
+                    return $"http://localhost:{port}/{serviceVersion}/{appSvc.appId}/{serviceMethod}";
+                }
                 var daprEndpoint = $"http://localhost:{port}/{serviceVersion}/invoke/{appSvc.appId}/method/{serviceMethod}";
                 return daprEndpoint;
             }
@@ -61,7 +65,7 @@ namespace Glav.Gardening.Communications
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
-            client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+            client.DefaultRequestHeaders.Add("User-Agent", USER_AGENT);
             var url = FormUrl(daprAppIdOrHost, serviceMethod, serviceVersion);
             var result = await client.GetAsync(url);
             var content = await GetZipBody(result);
@@ -77,7 +81,7 @@ namespace Glav.Gardening.Communications
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
             client.DefaultRequestHeaders.Connection.Add("keep-alive");
-            client.DefaultRequestHeaders.Add("User-Agent", "query/agent");
+            client.DefaultRequestHeaders.Add("User-Agent", USER_AGENT);
             var result = await client.GetAsync(rawUrl);
             var content = await GetZipBody(result);
             return content;

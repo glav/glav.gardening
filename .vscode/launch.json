@@ -2,31 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch all (Dapr)",
-            "type": "PowerShell",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "script": "${workspaceFolder}/Services/start-dapr-services.ps1",
-            "args": [],
-            "cwd": "${workspaceFolder}/Services",
-            "stopAtEntry": false,
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
-            "name": "Stop all (Dapr)",
-            "type": "PowerShell",
-            "request": "launch",
-            "script": "${workspaceFolder}/Services/stop-dapr-services.ps1",
-            "args": [],
-            "cwd": "${workspaceFolder}/Services",
-            "stopAtEntry": false,
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
             "name": "Dapr - Info Gathering .NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
@@ -119,7 +94,7 @@
     "compounds": [
         {
           "name": "Dapr - All Services",
-          "configurations": ["Dapr - Info Gathering .NET Core Launch (web)","Dapr - GardenOrg Agent .NET Core Launch (web)"]
+          "configurations": ["Dapr - Info Gathering .NET Core Launch (web)","Dapr - GardenOrg Agent .NET Core Launch (web)","Dapr - Data storage .NET Core Launch (web)"]
         }
       ]
 
