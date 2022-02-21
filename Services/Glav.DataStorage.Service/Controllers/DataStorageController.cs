@@ -20,11 +20,11 @@ public class DataStorageController : ControllerBase
     }
 
     [HttpPost("/persist")]
-    public async Task Persist(object data)
+    public async Task Persist(string key, object data)
     {
         _logger.LogInformation("DataStorage: Persisting data to storage");
-        var storeResult = await _commsProxy.StoreState("test", data);
-        var testData = await _commsProxy.GetState("test");
+        var storeResult = await _commsProxy.StoreState(key, data);
+        //var testData = await _commsProxy.GetState(key);
     }
 }
 
