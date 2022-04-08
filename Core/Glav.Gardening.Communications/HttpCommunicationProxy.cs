@@ -30,6 +30,7 @@ namespace Glav.Gardening.Communications
             }
             catch (Exception ex)
             {
+                //todo: log it baby
                 throw;
             }
         }

@@ -15,6 +15,7 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
     {
         private readonly ILogger<GardenOrgWebsiteAgent> _logger;
         private int _progress = 0;
+        private const int TAKE_RESULT_COUNT = 5;
         const string _host = "garden.org";
         private readonly ICommunicationProxy _commsProxy;
         public GardenOrgWebsiteAgent(ILogger<GardenOrgWebsiteAgent> logger, ICommunicationProxy commsProxy)
@@ -54,8 +55,9 @@ namespace Glav.InformationGathering.Domain.GardenOrg.Domain
                 _progress = 40;
 
                 // 1. Pass search results into next component to make additional queries against GardenOrg to create a GardenOrgPlantItem for each result
-                var resultList = new List<GardenOrgSearchResultDetail>(searchResults.Count);
-                foreach (var result in searchResults)
+                var topFiveItems = searchResults.Take(TAKE_RESULT_COUNT);
+                var resultList = new List<GardenOrgSearchResultDetail>(topFiveItems.Count());
+                foreach (var result in topFiveItems)
                 {
                     _logger.LogInformation($"Collecting detailed info from search result [{result.ResultText}] via GardenOrgAgent");
                     var detailContent = await _commsProxy.GetExternalContentAsync($"https://{_host}{result.Href}");

@@ -9,5 +9,10 @@
   "StorageAccountName":"<STORAGE-ACCT-NAME>",
   "AksClusterName":"<AKS-CLUSTER-NAME>",
   "AksNodeVmSize": "<AZURE-VM-SIZE>",
-  "AksNodeCount": 1
+  "AksNodeCount": 1,
+  "DbName": "<DB-NAME>",
+  "DbContainerName": "<DB-CONTAINER-NAME>",
+  "DbPrimaryRegion": "<DB-PRIMARY-REGION>",
+  "DbThroughput": 400
+
 }
