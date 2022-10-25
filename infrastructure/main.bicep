@@ -46,6 +46,7 @@ module cosmosDbResource 'cosmosdb.bicep' = {
     databaseName: dbName
     primaryRegion: dbPrimaryRegion
     throughput: throughput
+    location: location
   }
 }
 
