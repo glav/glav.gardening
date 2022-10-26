@@ -1,0 +1,54 @@
+parameters:
+  - name: serviceConnectionName
+    type: string
+  - name: resourceGroupName
+    type: string
+
+steps:
+- task: AzurePowerShell@5
+  displayName: 'Provision Azure Resources'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    ScriptType: 'FilePath'
+    azurePowerShellVersion: 'LatestVersion'
+    pwsh: true
+    ScriptPath: '$(Pipeline.Workspace)/infrastructure/deploy.ps1'
+    ScriptArguments:
+      -SubscriptionId '$(SubscriptionId)' `
+      -ResourceGroupName ${{ parameters.resourceGroupName }} `
+      -Environment '$(Environment)' `
+      -Location '$(Location)' `
+      -DaysToLive '$(DaysToLive)' `
+      -Purpose '$(Purpose)' `
+      -EventGridTopicName '$(EventGridTopicName)' `
+      -StorageAccountName '$(StorageAccountName)' `
+      -AksClusterName '$(AksClusterName)' `
+      -AksNodeVmSize '$(AksNodeVmSize)' `
+      -AksNodeCount '$(AksNodeCount)' ` 
+     workingDirectory: '$(Pipeline.Workspace)/infrastructure'
+
+- task: DownloadPipelineArtifact@2
+  condition: succeeded()
+  inputs:
+    buildType: 'current'
+    targetPath: '$(Pipeline.Workspace)'
+
+- task: AzureFunctionApp@1
+  condition: succeeded()
+  displayName: 'Deploy Market Azure function'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    appType: 'functionApp'
+    appName: $(marketAppName)
+    package: '$(Pipeline.Workspace)/functions/MarketFunction_$(Build.BuildId).zip'
+    deploymentMethod: 'auto'
+
+- task: AzureFunctionApp@1
+  condition: succeeded()
+  displayName: 'Deploy Bids Azure function'
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnectionName }}
+    appType: 'functionApp'
+    appName: $(bidsAppName)
+    package: '$(Pipeline.Workspace)/functions/BidsFunction_$(Build.BuildId).zip'
+    deploymentMethod: 'auto'
