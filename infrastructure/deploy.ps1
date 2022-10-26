@@ -25,7 +25,7 @@ Param (
   [string]$DbName,
   [string]$DbContainerName,
   [string]$DbPrimaryRegion,
-  [int]$DbThroughput
+  [int]$DbThroughput = 400
 )
 
 ####################################################
@@ -157,6 +157,7 @@ try {
     -ResourceGroupName $rg `
     -TemplateFile $armTemplatePath `
     -TemplateParameterObject $armParams `
+    -WhatIf `
     -ErrorAction Continue
 
     # Cleanup
