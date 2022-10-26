@@ -17,8 +17,8 @@ param dbContainerName string
 param dbPrimaryRegion string =  resourceGroup().location
 param throughput int = 400
 
-module logAnalytics 'log-analytics.bicep' = {
-  name: 'loganalytics'
+module diagnosticsLogging 'diagnostics-logging.bicep' = {
+  name: 'diagnosticslogging'
 }
 module aksClusterResource 'akscluster.bicep' = {
   name: 'aksClusterResource'
