@@ -19,6 +19,10 @@ param throughput int = 400
 
 module diagnosticsLogging 'diagnostics-logging.bicep' = {
   name: 'diagnosticslogging'
+  params: {
+    environment: environment
+    location: location
+  }
 }
 module aksClusterResource 'akscluster.bicep' = {
   name: 'aksClusterResource'

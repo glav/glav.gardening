@@ -30,6 +30,8 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            infrastructure/deploy.ps1 -Environment ${{ env.ENVIRONMENT }} -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID}} -TenantId ${{ secrets.AZURE_TENANT_ID }} -ResourceGroupName "gardening" -DbName ${{ env.DBNAME}} -DbContainerName ${{ env.DBCONTAINERNAME}} -DbPrimaryRegion "${{ env.DBPRIMARYREGION}}"
+            infrastructure/deploy.ps1 -Environment ${{ env.ENVIRONMENT }} -SubscriptionId ${{ secrets.AZURE_SUBSCRIPTION_ID}} `
+            -TenantId ${{ secrets.AZURE_TENANT_ID }} -ResourceGroupName "gardening" -DbName ${{ env.DBNAME}} -DbContainerName ${{ env.DBCONTAINERNAME}} -DbPrimaryRegion "${{ env.DBPRIMARYREGION}}"
+            
           azPSVersion: "latest"
 #use az cli to build AKS -- will rsource gorup first
