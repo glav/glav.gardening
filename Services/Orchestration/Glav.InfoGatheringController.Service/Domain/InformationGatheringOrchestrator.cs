@@ -3,6 +3,7 @@ using Glav.InformationGathering.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Glav.InformationGathering.Domain
@@ -23,20 +24,20 @@ namespace Glav.InformationGathering.Domain
         {
             //TODO: Initiated by a received msg on svc bus (typically)
             //TODO: Loop through agents
-            //TODO: Get Url of each agent and invoke it.
-            //TODO: Store results.
+            
+            //TODO: Get Url of each agent and invokesend another message to invoke each one OR just get agents to listen via the topic message????
+
+            //TODO: If doing sync via this, then store results??
+
+
 
             _logger.LogInformation("Executing gardenorg agent");
             _logger.LogInformation("Initiating GardenOrg agent");
             var gardenAgentAppId = "gardenorgagent";
             var serviceMethod = $"GardenOrgAgent?queryTerm={queryTerm}";
-            if (!_commsProxy.IsDaprEnvironment())
-            {
-                gardenAgentAppId = _fallbackConfig.GardenOrgAgent;
-            } 
             var result = await _commsProxy.PostContentAsync(gardenAgentAppId, serviceMethod);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("Yeah - orchestrator not finished - sorry");
         }
     }
 }

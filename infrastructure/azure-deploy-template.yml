@@ -17,30 +17,15 @@ steps:
       -SubscriptionId '$(SubscriptionId)' `
       -ResourceGroupName ${{ parameters.resourceGroupName }} `
       -Environment '$(Environment)' `
-      -MarketAppName '$(marketAppName)' `
-      -BidsAppName '$(bidsAppName)' `
-      -EnergyOfferEndpoint '$(energyOfferEndpoint)' `
-      -EnergyOfferSubmitBidUriFragment '$(energyOfferSubmitBidUriFragment)' `
-      -EnergyOfferBidStatusUriFragment '$(energyOfferBidStatusUriFragment)' `
-      -EnergyOfferApiUser '$(energyOfferApiUser)' `
-      -DuidsToQuery '$(duidsToQuery)' `
-      -ShouldLogRequestsToApi '$(shouldLogRequestsToApi)' ` 
-      -ShouldLogRequestsToEnergyOffer '$(shouldLogRequestsToEnergyOffer)' `
-      -ShouldMockBidsetResponse '$(shouldMockBidsetResponse)' ` 
-      -ShouldMockBidSubmissionResponse '$(shouldMockBidSubmissionResponse)' `
-      -HostingPlanName '$(hostingPlanName)' `
-      -HostinPlanSkuTier '$(hostinPlanSkuTier)' `
-      -hostinPlanSkuName '$(hostinPlanSkuName)' `
-      -StorageAccountType '$(storageAccountType)' `
-      -OnPremisesVNETResourceId '$(onPremisesVNETResourceId)' `
-      -KeyVaultInstanceName '$(keyVaultName)' `
-      -ApplicationInsightsName '$(applicationInsightsName)' `
-      -InfigenApiManagementName '$(ApiManagementName)' `
-      -NotificationV2ApiCode '$(notificationV2ApiCode)' `
-      -NotificationV2ApiUrl '$(notificationV2ApiUrl)' `
-      -ForecastApiCode '$(forecastApiCode)' `
-      -ForecastApiUrl '$(forecastApiUrl)'
-    workingDirectory: '$(Pipeline.Workspace)/infrastructure'
+      -Location '$(Location)' `
+      -DaysToLive '$(DaysToLive)' `
+      -Purpose '$(Purpose)' `
+      -EventGridTopicName '$(EventGridTopicName)' `
+      -StorageAccountName '$(StorageAccountName)' `
+      -AksClusterName '$(AksClusterName)' `
+      -AksNodeVmSize '$(AksNodeVmSize)' `
+      -AksNodeCount '$(AksNodeCount)' ` 
+     workingDirectory: '$(Pipeline.Workspace)/infrastructure'
 
 - task: DownloadPipelineArtifact@2
   condition: succeeded()

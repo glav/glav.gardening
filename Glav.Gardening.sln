@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D8CBBC2B-353A-4983-8A7E-85C876889BF5}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.Gardening.UnitTests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C5CE532-E235-48D9-BE50-CD16E92DDBF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Glav.Gardening.Communications", "Core\Glav.Gardening.Communications\Glav.Gardening.Communications.csproj", "{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.Gardening.Communications", "Core\Glav.Gardening.Communications\Glav.Gardening.Communications.csproj", "{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{3054245E-55E1-4E59-9CC9-E856B977C552}"
 EndProject
@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci-build.yml = .github\workflows\ci-build.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Glav.DataStorage.Service", "Services\Glav.DataStorage.Service\Glav.DataStorage.Service.csproj", "{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{68762775-3C12-4463-843E-162729E8D4E7} = {D8CBBC2B-353A-4983-8A7E-85C876889BF5}
 		{6C133D77-7AC9-4EF7-8DF4-9C9A64A144CA} = {9C5CE532-E235-48D9-BE50-CD16E92DDBF6}
 		{BB5852FB-73C3-44D0-99B8-21A2754081A4} = {3054245E-55E1-4E59-9CC9-E856B977C552}
+		{DFDDEF16-83AA-4827-9B7A-4D1423F5FA80} = {D6098922-18C5-4FFD-9B37-9DDC3A3B7C27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A88D64E-B6AA-4E75-90C7-1A3976B7E363}

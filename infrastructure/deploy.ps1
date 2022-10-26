@@ -4,6 +4,9 @@ Param (
   [string] $SubscriptionId,
 
   [Parameter(Mandatory = $true)] 
+  [string] $TenantId,
+
+  [Parameter(Mandatory = $true)] 
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment,
 
@@ -11,15 +14,18 @@ Param (
 
   [string] $Location = "Australia East",
   
-  [Int16] $ClusterNodeCount = 1,
   [Int16] $DaysToLive = 1,
   [string] $Purpose = 'personal-use',
   [string] $EventGridTopicName = 'glavgardenevents',
   [string] $StorageAccountName = 'gardeningsa',
   [string] $AksClusterName = 'aksgardening',
   [string] $AksNodeVmSize = 'Standard_DS2_v2',
-  [int] $AksNodeCount = 1
-  
+  [int] $AksNodeCount = 1,
+
+  [string]$DbName,
+  [string]$DbContainerName,
+  [string]$DbPrimaryRegion,
+  [int]$DbThroughput
 )
 
 ####################################################
@@ -105,7 +111,7 @@ try {
 
   if ($context.Subscription.Id -ne $SubscriptionId) {
     Write-Host "Setting Powershell Subscription/Context to Subscription Id [$SubscriptionId]"
-    $ctxtResult = Set-AzContext -SubscriptionId $SubscriptionId
+    $ctxtResult = Set-AzContext -Subscription $SubscriptionId -Tenant $TenantId
     ThrowIfNullResult -result $ctxtResult -message "Error setting powershell subscription/context to Subscription Id [$SubscriptionId]"
   }
   
@@ -121,7 +127,7 @@ try {
   ThrowIfNullResult -result $rgResult -message "Error creating/updating resource group"
 
   Write-Host " .. Setting expiresOn, Environment and Usage tags"
-  $expiry = ((Get-Date).AddDays($DaysToLive)).ToString('yyyy-MM-dd')
+  $expiry = ((Get-Date).ToString('yyyy-MM-dd')
   az tag update --operation replace --resource-id $rgResult.id --tags "expiresOn=$expiry" "Environment=$Environment" "Usage=$Purpose"
 
   Write-Host "Deploying infrastructure"
@@ -139,7 +145,10 @@ try {
     "aksClusterName"     = $AksClusterName
     "aksNodeVmSize"      = $AksNodeVmSize
     "aksNodeCount"       = $AksNodeCount
-
+    "dbName"             = $DbName
+    "DbContainerName"    = $DbContainerName
+    "dbPrimaryRegion"    = $DbPrimaryRegion
+    "throughput"         = $DbThroughput
   }
  
   Write-Host "Beginning infrastructure ARM deployment"
