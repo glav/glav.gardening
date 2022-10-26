@@ -127,7 +127,7 @@ try {
   ThrowIfNullResult -result $rgResult -message "Error creating/updating resource group"
 
   Write-Host " .. Setting expiresOn, Environment and Usage tags"
-  $expiry = ((Get-Date).ToString('yyyy-MM-dd')
+  $expiry = (Get-Date).ToString('yyyy-MM-dd')
   az tag update --operation replace --resource-id $rgResult.id --tags "expiresOn=$expiry" "Environment=$Environment" "Usage=$Purpose"
 
   Write-Host "Deploying infrastructure"
