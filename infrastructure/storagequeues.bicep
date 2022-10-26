@@ -41,6 +41,7 @@ resource StorageAccountResource 'Microsoft.Storage/storageAccounts@2021-06-01' =
       keySource: 'Microsoft.Storage'
     }
     accessTier: 'Hot'
+    
   }
 }
 

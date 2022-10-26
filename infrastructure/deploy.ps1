@@ -157,7 +157,6 @@ try {
     -ResourceGroupName $rg `
     -TemplateFile $armTemplatePath `
     -TemplateParameterObject $armParams `
-    -WhatIf `
     -ErrorAction Continue
 
     # Cleanup
