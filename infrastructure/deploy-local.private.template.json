@@ -1,5 +1,6 @@
 {
   "SubscriptionId": "<target subscription id>",
+  "TenantId": "<target tenant id>",
   "ResourceGroupName": "<RESOURCE-GROUP-NAME>",
   "Environment": "<DEV-UAT-OTHER>",
   "Location": "<LOCATION>",

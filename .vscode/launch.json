@@ -80,11 +80,7 @@
             "preLaunchTask": "build",
             "script": "${workspaceFolder}/infrastructure/remove-dev-deploy.ps1",
             "args": [],
-            "cwd": "${workspaceFolder}/infrastructure",
-            "stopAtEntry": false,
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
+            "cwd": "${workspaceFolder}/infrastructure"
         }
     ],
     "compounds": [

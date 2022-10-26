@@ -4,6 +4,9 @@ Param (
   [string] $SubscriptionId,
 
   [Parameter(Mandatory = $true)] 
+  [string] $TenantId,
+
+  [Parameter(Mandatory = $true)] 
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment,
 
@@ -108,7 +111,7 @@ try {
 
   if ($context.Subscription.Id -ne $SubscriptionId) {
     Write-Host "Setting Powershell Subscription/Context to Subscription Id [$SubscriptionId]"
-    $ctxtResult = Set-AzContext -Subscription $SubscriptionId
+    $ctxtResult = Set-AzContext -Subscription $SubscriptionId -Tenant $TenantId
     ThrowIfNullResult -result $ctxtResult -message "Error setting powershell subscription/context to Subscription Id [$SubscriptionId]"
   }
   
@@ -124,7 +127,7 @@ try {
   ThrowIfNullResult -result $rgResult -message "Error creating/updating resource group"
 
   Write-Host " .. Setting expiresOn, Environment and Usage tags"
-  $expiry = ((Get-Date).AddDays($DaysToLive)).ToString('yyyy-MM-dd')
+  $expiry = ((Get-Date).ToString('yyyy-MM-dd')
   az tag update --operation replace --resource-id $rgResult.id --tags "expiresOn=$expiry" "Environment=$Environment" "Usage=$Purpose"
 
   Write-Host "Deploying infrastructure"
