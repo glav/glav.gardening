@@ -38,6 +38,11 @@ resource AksClusterResource 'Microsoft.ContainerService/managedClusters@2021-09-
     // }
     enableRBAC: true
     disableLocalAccounts: false
+    addonProfiles: {
+      httpApplicationRouting: {
+        enabled: true
+      }
+    }
   }
 }
 
@@ -65,3 +70,6 @@ resource AksClusterNodepoolResource 'Microsoft.ContainerService/managedClusters/
     enableFIPS: false
   }
 }
+
+
+
