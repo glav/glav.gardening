@@ -43,9 +43,6 @@ resource AksClusterResource 'Microsoft.ContainerService/managedClusters@2021-09-
       httpApplicationRouting: {
         enabled: true
       }
-      extensionManager: {
-        enabled: true
-      }
       omsagent: {
         enabled: true
         config: {
