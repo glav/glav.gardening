@@ -43,6 +43,6 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            infrastructure/enable-dapr-on-aks.ps1 -ResourceGroupName ${{ env.RESOURCEGROUP}} -AksClusterName ${{ env.AKSCLUSTERNAME }}
+            infrastructure/enable-dapr-on-aks.ps1 -ResourceGroupName ${{ env.RESOURCEGROUP}} -AksClusterName ${{ env.AKSCLUSTERNAME }} -Environment ${{ env.ENVIRONMENT }}
             
           azPSVersion: "latest"
