@@ -17,14 +17,14 @@ param dbContainerName string
 param dbPrimaryRegion string =  resourceGroup().location
 param throughput int = 400
 
-module diagnosticsLogging 'diagnostics-logging.bicep' = {
+module diagnosticsLogging './bicep-modules/diagnostics-logging.bicep' = {
   name: 'diagnosticslogging'
   params: {
     environment: environment
     location: location
   }
 }
-module aksClusterResource 'akscluster.bicep' = {
+module aksClusterResource './bicep-modules/akscluster.bicep' = {
   name: 'aksClusterResource'
   params: {
     aksClusterName: aksClusterName
@@ -32,10 +32,11 @@ module aksClusterResource 'akscluster.bicep' = {
     aksNodeCount: aksNodeCount
     environment: environment
     location: location
+    logAnalyticsWorkspaceResourceId: diagnosticsLogging.outputs.logAnalyticsWorkspaceId
   }
 }
 
-module storageAndQueuesResource 'storagequeues.bicep' = {
+module storageAndQueuesResource './bicep-modules/storagequeues.bicep' = {
   name: 'storageAndQueues'
   params: {
     environment: environment
@@ -45,7 +46,7 @@ module storageAndQueuesResource 'storagequeues.bicep' = {
   }
 }
 
-module cosmosDbResource 'cosmosdb.bicep' = {
+module cosmosDbResource './bicep-modules/cosmosdb.bicep' = {
   name: 'dbStore'
   params: {
     containerName: dbContainerName
