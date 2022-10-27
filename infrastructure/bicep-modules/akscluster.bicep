@@ -3,6 +3,7 @@ param environment string
 param aksClusterName string
 param aksNodeVmSize string
 param aksNodeCount int
+param logAnalyticsWorkspaceResourceId string
 
 var envSpecificAksClusterName = '${aksClusterName}${environment}'
 
@@ -42,6 +43,16 @@ resource AksClusterResource 'Microsoft.ContainerService/managedClusters@2021-09-
       httpApplicationRouting: {
         enabled: true
       }
+      extensionManager: {
+        enabled: true
+      }
+      omsagent: {
+        enabled: true
+        config: {
+          logAnalyticsWorkspaceResourceID: logAnalyticsWorkspaceResourceId
+        }
+      }
+
     }
   }
 }
@@ -70,6 +81,7 @@ resource AksClusterNodepoolResource 'Microsoft.ContainerService/managedClusters/
     enableFIPS: false
   }
 }
+
 
 
 

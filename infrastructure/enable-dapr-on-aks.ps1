@@ -1,7 +1,22 @@
 Param (
   [string] $ResourceGroupName = "gardening" ,
-  [string] $AksClusterName = 'aksgardening'
+  [string] $AksClusterName = 'aksgardening',
+  [Parameter(Mandatory = $true)] 
+  [ValidatePattern("[a-zA-Z0-9]{1,5}")]
+  [string] $Environment
+
 )
+
+function ThrowIfNullResult($result, [string] $message) {
+    if ($null -eq $message -or $message -eq "") {
+      $message = "An error occurred performing a deployment or executing an action"
+    }
+    if ($null -eq $result) {
+      Write-Host $message
+      throw $message
+    }
+  
+  }
 
 ################################################
 #### Note: This assumes that the requisite features have been enabled on your subscription
@@ -19,12 +34,16 @@ Param (
 # az provider register --namespace Microsoft.ContainerService
 ################################################
 
+$rg = "$ResourceGroupName-$Environment"
 
-az aks get-credentials -n $AksClusterName -g $ResourceGroupName --overwrite-existing
+$rgCheck = az group show -g $rg
+ThrowIfNullResult -result $rgCheck -message "ResourceGroup [$rg] does not exist"
+
+az aks get-credentials -n $AksClusterName -g $rg --overwrite-existing
 
 Write-Host "Adding Az CLI K8s extention..."
 az extension add --name k8s-extension
 az extension update --name k8s-extension
 
-Write-Host "Installing the Dapr extension into Resource Group [$ResourceGroupName], Cluster [$AksClusterName]..."
-az k8s-extension create --cluster-type managedClusters --cluster-name $AksClusterName --resource-group $ResourceGroupName --name DaprExtension --extension-type Microsoft.Dapr --auto-upgrade-minor-version true
+Write-Host "Installing the Dapr extension into Resource Group [$rg], Cluster [$AksClusterName]..."
+az k8s-extension create --cluster-type managedClusters --cluster-name $AksClusterName --resource-group $rg --name DaprExtension --extension-type Microsoft.Dapr --auto-upgrade-minor-version true

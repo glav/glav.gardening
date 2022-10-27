@@ -32,6 +32,7 @@ module aksClusterResource './bicep-modules/akscluster.bicep' = {
     aksNodeCount: aksNodeCount
     environment: environment
     location: location
+    logAnalyticsWorkspaceResourceId: diagnosticsLogging.outputs.logAnalyticsWorkspaceId
   }
 }
 
