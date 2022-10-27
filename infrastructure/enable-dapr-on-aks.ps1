@@ -35,15 +35,21 @@ function ThrowIfNullResult($result, [string] $message) {
 ################################################
 
 $rg = "$ResourceGroupName-$Environment"
+$aks = $AksClusterName + $Environment
 
 $rgCheck = az group show -g $rg
 ThrowIfNullResult -result $rgCheck -message "ResourceGroup [$rg] does not exist"
+Write-Host "ResourceGroup [$rg] found."
 
-az aks get-credentials -n $AksClusterName -g $rg --overwrite-existing
+$aksCheck=(az aks show -g $rg -n $aks)
+ThrowIfNullResult -result $aksCheck -message "AKS Cluster [$aks] does not exist"
+Write-Host "AKS Cluster [$aks] found."
+
+az aks get-credentials -n $aks -g $rg --overwrite-existing
 
 Write-Host "Adding Az CLI K8s extention..."
 az extension add --name k8s-extension
 az extension update --name k8s-extension
 
-Write-Host "Installing the Dapr extension into Resource Group [$rg], Cluster [$AksClusterName]..."
-az k8s-extension create --cluster-type managedClusters --cluster-name $AksClusterName --resource-group $rg --name DaprExtension --extension-type Microsoft.Dapr --auto-upgrade-minor-version true
+Write-Host "Installing the Dapr extension into Resource Group [$rg], Cluster [$aks]..."
+az k8s-extension create --cluster-type managedClusters --cluster-name $aks --resource-group $rg --name DaprExtension --extension-type Microsoft.Dapr --auto-upgrade-minor-version true
