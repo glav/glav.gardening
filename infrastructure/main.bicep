@@ -24,6 +24,15 @@ module diagnosticsLogging './bicep-modules/diagnostics-logging.bicep' = {
     location: location
   }
 }
+
+module containerRegistry 'bicep-modules/container-registry.bicep' = {
+  name: 'containerregistry'
+  params: {
+    aksClusterName: aksClusterName
+    environment: environment
+    location: location
+  }
+}
 module aksClusterResource './bicep-modules/akscluster.bicep' = {
   name: 'aksClusterResource'
   params: {
