@@ -4,7 +4,7 @@ Param (
   [Parameter(Mandatory = $true)] 
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment
-
+  
 )
 
 function ThrowIfNullResult($result, [string] $message) {

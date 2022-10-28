@@ -69,5 +69,7 @@ module cosmosDbResource './bicep-modules/cosmosdb.bicep' = {
 output eventGridTopicId string = storageAndQueuesResource.outputs.eventGridTopicId
 output eventGridEndpoint string = storageAndQueuesResource.outputs.eventGridEndpoint
 output storageQueueId string = storageAndQueuesResource.outputs.storageQueueId
+output containerRegistryId string = containerRegistry.outputs.registryId
+output aksClusterName string = aksClusterResource.outputs.clusterName
 
 

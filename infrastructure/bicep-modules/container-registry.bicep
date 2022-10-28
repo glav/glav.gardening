@@ -13,11 +13,16 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-06-01-pr
   identity: {
     type: 'SystemAssigned'
   }
+
   properties: {
     adminUserEnabled: true
   }
+  
 }
 
 output registryName string = containerRegistry.name
 output registryId string = containerRegistry.id
 output registryManagedIdentityId string = containerRegistry.identity.principalId
+
+
+
