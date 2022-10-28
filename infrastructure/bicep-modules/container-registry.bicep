@@ -2,7 +2,7 @@ param location string
 param environment string
 param aksClusterName string
 
-var acrName = '${aksClusterName}-${environment}-registry'
+var acrName = '${aksClusterName}${environment}registry'
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
