@@ -79,6 +79,7 @@ resource AksClusterNodepoolResource 'Microsoft.ContainerService/managedClusters/
   }
 }
 
+output clusterName string = AksClusterResource.name
 
 
 

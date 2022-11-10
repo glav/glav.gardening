@@ -172,6 +172,12 @@ try {
   $eventGridTopicId = $armDeployResult.Outputs["eventGridTopicId"].Value
   $eventGridTopicEndpoint = $armDeployResult.Outputs["eventGridEndpoint"].Value
   $queueid = $armDeployResult.Outputs["storageQueueId"].Value
+  $containerRegistryId = $armDeployResult.Outputs["containerRegistryId"].Value
+  $aksClusterName = $armDeployResult.Outputs["aksClusterName"].Value
+
+ Write-Host "Granting access to container registry for AKS Cluster..."
+ az aks update -n $aksClusterName -g $rg --attach-acr "$containerRegistryId"
+
 
   # Write-Host "Function deployment complete"
   Write-Host "--"

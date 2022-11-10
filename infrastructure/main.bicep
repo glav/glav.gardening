@@ -24,6 +24,15 @@ module diagnosticsLogging './bicep-modules/diagnostics-logging.bicep' = {
     location: location
   }
 }
+
+module containerRegistry 'bicep-modules/container-registry.bicep' = {
+  name: 'containerregistry'
+  params: {
+    aksClusterName: aksClusterName
+    environment: environment
+    location: location
+  }
+}
 module aksClusterResource './bicep-modules/akscluster.bicep' = {
   name: 'aksClusterResource'
   params: {
@@ -60,5 +69,7 @@ module cosmosDbResource './bicep-modules/cosmosdb.bicep' = {
 output eventGridTopicId string = storageAndQueuesResource.outputs.eventGridTopicId
 output eventGridEndpoint string = storageAndQueuesResource.outputs.eventGridEndpoint
 output storageQueueId string = storageAndQueuesResource.outputs.storageQueueId
+output containerRegistryId string = containerRegistry.outputs.registryId
+output aksClusterName string = aksClusterResource.outputs.clusterName
 
 

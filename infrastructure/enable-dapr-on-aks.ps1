@@ -4,7 +4,7 @@ Param (
   [Parameter(Mandatory = $true)] 
   [ValidatePattern("[a-zA-Z0-9]{1,5}")]
   [string] $Environment
-
+  
 )
 
 function ThrowIfNullResult($result, [string] $message) {
@@ -20,6 +20,7 @@ function ThrowIfNullResult($result, [string] $message) {
 
 ################################################
 #### Note: This assumes that the requisite features have been enabled on your subscription
+#### See: https://docs.dapr.io/developing-applications/integrations/azure/azure-kubernetes-service-extension/
 
 # Register features
 # az feature register --namespace "Microsoft.ContainerService" --name "AKS-ExtensionManager"
