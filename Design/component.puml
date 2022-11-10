@@ -3,26 +3,29 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Person(personUser,"User")
-Container(compWebsite,"Website")
+System_Ext(systemExternalActors,"External Actors") {
+    Person(personUser,"User")
+    Container(compWebsite,"Website")
+}
 Container_Boundary(boundaryApi,"API") {
+    Boundary(boundaryDataGatheringSubsystem,"Agent Subsystem") {
+        ComponentQueue(compEventGrid, "EventGrid","")
+        ComponentQueue(compMessageQueue, "MessageQueue","Pub/Sub")
+        Component(compInfoGatherer, "Information Gatherer Orchestrator","HTTPS")
+        Component(compGardenOrgAgent, "GardenOrgAgent","DAPR")
+        Component(compAgent2, "Agent 2","DAPR")
+        Component(compAgent3, "Agent 3","DAPR")
+    }
     Component(compSeedingService, "Initial Seeding Service","Container, C#")
     Component(compPlantQueryService, "PlantQueryService","Container, C#")
     Component(compPeriodicProcess, "PeriodicProcess","Azure function, C#","Every day?",$sprite="robot2")
-    ComponentQueue(compEventGrid, "EventGrid","")
-    ComponentQueue(compMessageQueue, "MessageQueue","Pub/Sub")
-    Component(compInfoGatherer, "Information Gatherer Orchestrator","HTTPS")
-    Component(compGardenOrgAgent, "GardenOrgAgent","DAPR")
-    Component(compAgent2, "Agent 2","DAPR")
-    Component(compAgent3, "Agent 3","DAPR")
     Component_Ext(compWebInvokeGather,"Webhook")
     ComponentDb(compReadModel, "ReadModel","CosmosDB")
     Component_Ext(compDataStorreService,"DAPR DataStore Abstraction Service","DAPR")
 }
 
 Rel(compPlantQueryService,compDataStorreService,"dapr")
-Rel(personUser,compPlantQueryService,"API Call")
-Rel(compWebsite,compPlantQueryService,"API Call")
+Rel(systemExternalActors,compPlantQueryService,"API Call")
 
 Rel(compSeedingService, compEventGrid,"One time only – initiate info gathering for known list of initial terms")
 Rel(compPeriodicProcess, compEventGrid,"push initiate gather message")
