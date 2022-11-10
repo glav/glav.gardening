@@ -1,0 +1,18 @@
+@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personApiUser, "API User")
+System(systemWebsite, "External websites")
+
+System_Boundary(boundaryApi, "Gardening API") {
+    Container(containerApi, "Gardening API", "C#, Dapr, Containers", "Allows queries and surfaces plant and gardining information")
+    ContainerDb(containerDatastore, "Gardening Datstore", "CosmosDB")
+
+}
+
+Rel(personApiUser, boundaryApi, "Uses", "HTTPS (Postman)")
+Rel(systemWebsite, boundaryApi, "Uses", "HTTPS")
+
+Rel(containerApi, containerDatastore,"Uses")
+@enduml
