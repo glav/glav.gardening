@@ -3,24 +3,35 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
+!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+!includeurl AzurePuml/Analytics/AzureEventHub.puml
+!includeurl AzurePuml/Containers/AzureContainerApp.puml
+!includeurl AzurePuml/Integration/AzureEventGrid.puml
+!includeurl AzurePuml/Integration/AzureServiceBus.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+
 System_Ext(systemExternalActors,"External Actors") {
     Person(personUser,"User")
     Container(compWebsite,"Website")
 }
 Container_Boundary(boundaryApi,"API") {
     Boundary(boundaryDataGatheringSubsystem,"Agent Subsystem") {
-        ComponentQueue(compEventGrid, "EventGrid","")
-        ComponentQueue(compMessageQueue, "MessageQueue","Pub/Sub")
-        Component(compInfoGatherer, "Information Gatherer Orchestrator","HTTPS")
-        Component(compGardenOrgAgent, "GardenOrgAgent","DAPR")
-        Component(compAgent2, "Agent 2","DAPR")
-        Component(compAgent3, "Agent 3","DAPR")
+        AzureEventGrid(compEventGrid, "EventGrid","Publish")
+        AzureServiceBus(compMessageQueue, "MessageQueue","Pub/Sub")
+        AzureContainerApp(compInfoGatherer, "Information Gatherer Orchestrator","HTTPS")
+        AzureContainerApp(compGardenOrgAgent, "GardenOrgAgent","DAPR")
+        AzureContainerApp(compAgent2, "Agent 2","DAPR")
+        AzureContainerApp(compAgent3, "Agent 3","DAPR")
     }
-    Component(compSeedingService, "Initial Seeding Service","Container, C#")
-    Component(compPlantQueryService, "PlantQueryService","Container, C#")
-    Component(compPeriodicProcess, "PeriodicProcess","Azure function, C#","Every day?",$sprite="robot2")
+    AzureContainerApp(compSeedingService, "Initial Seeding Service","Container, C#")
+    AzureContainerApp(compPlantQueryService, "PlantQueryService","Container, C#")
+    AzureFunction(compPeriodicProcess, "PeriodicProcess","Azure function, C#","Every day?")
     Component_Ext(compWebInvokeGather,"Webhook")
-    ComponentDb(compReadModel, "ReadModel","CosmosDB")
+    AzureCosmosDb(compReadModel, "Read Model","CosmosDB")
     Component_Ext(compDataStorreService,"DAPR DataStore Abstraction Service","DAPR")
 }
 

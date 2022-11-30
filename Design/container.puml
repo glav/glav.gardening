@@ -1,18 +1,27 @@
 @startuml Basic Sample
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/release/2-1/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+!includeurl AzurePuml/Analytics/AzureEventHub.puml
 
 Person(personApiUser, "API User")
 System(systemWebsite, "External websites")
+System_Ext(gardeningDataSources,"External data systems")
 
 System_Boundary(boundaryApi, "Gardening API") {
     Container(containerApi, "Gardening API", "C#, Dapr, Containers", "Allows queries and surfaces plant and gardining information")
-    ContainerDb(containerDatastore, "Gardening Datstore", "CosmosDB")
+    AzureCosmosDb(containerDatastore, "Gardening Datstore", "CosmosDB")
+    Container(containerDataAgents,"Data Gathering Agents","C#, Dapr, Containers","Gathers gardening data from various source systems")
 
 }
 
-Rel(personApiUser, boundaryApi, "Uses", "HTTPS (Postman)")
-Rel(systemWebsite, boundaryApi, "Uses", "HTTPS")
+Rel(personApiUser, containerApi, "Uses", "HTTPS (Postman)")
+Rel(systemWebsite, containerApi, "Uses", "HTTPS")
 
 Rel(containerApi, containerDatastore,"Uses")
+Rel(containerDataAgents, containerDatastore,"Populates")
+Rel(gardeningDataSources,containerDataAgents,"Reads/Gathers data")
 @enduml
