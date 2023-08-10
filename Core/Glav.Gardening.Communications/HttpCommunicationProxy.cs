@@ -102,6 +102,10 @@ namespace Glav.Gardening.Communications
             {
                 zipStr = new System.IO.Compression.GZipStream(await rspMsg.Content.ReadAsStreamAsync(), System.IO.Compression.CompressionMode.Decompress);
                 _logger.LogInformation("Request headers contain DEFLATE - setting DEFLATE decompression");
+            } else if (compressionType == CompressionType.Brotli)
+            {
+                zipStr = new System.IO.Compression.BrotliStream(await rspMsg.Content.ReadAsStreamAsync(), System.IO.Compression.CompressionMode.Decompress);
+                _logger.LogInformation("Request headers contain BROTLI - setting BROTLI decompression");
             }
 
             if (zipStr != null)

@@ -4,7 +4,8 @@
     {
         None,
         Gzip,
-        Deflate
+        Deflate,
+        Brotli
     }
 
 }

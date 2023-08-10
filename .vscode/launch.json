@@ -26,7 +26,7 @@
             "name": "Dapr - GardenOrg Agent .NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/Services/Agents/Glav.Gardening.Services.Agents.GardenOrg/bin/debug/net5.0/Glav.Gardening.Services.Agents.GardenOrg.dll",
+            "program": "${workspaceFolder}/Services/Agents/Glav.Gardening.Services.Agents.GardenOrg/bin/debug/net7.0/Glav.Gardening.Services.Agents.GardenOrg.dll",
             "cwd": "${workspaceFolder}/Services/Agents/Glav.Gardening.Services.Agents.GardenOrg",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",

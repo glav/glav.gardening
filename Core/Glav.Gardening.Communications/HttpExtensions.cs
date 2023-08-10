@@ -23,6 +23,10 @@ namespace Glav.Gardening.Communications
             {
                 return CompressionType.Deflate;
             }
+            if (headers.Any(h => h.ToLowerInvariant().Contains("br")))
+            {
+                return CompressionType.Brotli;
+            }
             return CompressionType.None;
         }
     }
